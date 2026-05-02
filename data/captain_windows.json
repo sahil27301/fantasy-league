@@ -1,0 +1,146 @@
+[
+  {
+    "leagueTeamId": "shreya",
+    "windowIndex": 1,
+    "fromMatch": 1,
+    "toMatch": 35,
+    "captainPlayerId": 64712,
+    "viceCaptainPlayerId": 66584
+  },
+  {
+    "leagueTeamId": "shreya",
+    "windowIndex": 2,
+    "fromMatch": 36,
+    "toMatch": 70,
+    "captainPlayerId": 64712,
+    "viceCaptainPlayerId": 114349
+  },
+  {
+    "leagueTeamId": "sahil",
+    "windowIndex": 1,
+    "fromMatch": 1,
+    "toMatch": 35,
+    "captainPlayerId": 62576,
+    "viceCaptainPlayerId": 66799
+  },
+  {
+    "leagueTeamId": "sahil",
+    "windowIndex": 2,
+    "fromMatch": 36,
+    "toMatch": 70,
+    "captainPlayerId": 66799,
+    "viceCaptainPlayerId": 9782
+  },
+  {
+    "leagueTeamId": "monu",
+    "windowIndex": 1,
+    "fromMatch": 1,
+    "toMatch": 35,
+    "captainPlayerId": 63751,
+    "viceCaptainPlayerId": 10094
+  },
+  {
+    "leagueTeamId": "monu",
+    "windowIndex": 2,
+    "fromMatch": 36,
+    "toMatch": 70,
+    "captainPlayerId": 59736,
+    "viceCaptainPlayerId": 71370
+  },
+  {
+    "leagueTeamId": "pooja",
+    "windowIndex": 1,
+    "fromMatch": 1,
+    "toMatch": 35,
+    "captainPlayerId": 62023,
+    "viceCaptainPlayerId": 66046
+  },
+  {
+    "leagueTeamId": "pooja",
+    "windowIndex": 2,
+    "fromMatch": 36,
+    "toMatch": 70,
+    "captainPlayerId": 65687,
+    "viceCaptainPlayerId": 71366
+  },
+  {
+    "leagueTeamId": "ranveer",
+    "windowIndex": 1,
+    "fromMatch": 1,
+    "toMatch": 35,
+    "captainPlayerId": 120157,
+    "viceCaptainPlayerId": 88352
+  },
+  {
+    "leagueTeamId": "ranveer",
+    "windowIndex": 2,
+    "fromMatch": 36,
+    "toMatch": 70,
+    "captainPlayerId": 71151,
+    "viceCaptainPlayerId": 100570
+  },
+  {
+    "leagueTeamId": "sid",
+    "windowIndex": 1,
+    "fromMatch": 1,
+    "toMatch": 35,
+    "captainPlayerId": 66818,
+    "viceCaptainPlayerId": 67905
+  },
+  {
+    "leagueTeamId": "sid",
+    "windowIndex": 2,
+    "fromMatch": 36,
+    "toMatch": 70,
+    "captainPlayerId": 66818,
+    "viceCaptainPlayerId": 67469
+  },
+  {
+    "leagueTeamId": "vedant",
+    "windowIndex": 1,
+    "fromMatch": 1,
+    "toMatch": 35,
+    "captainPlayerId": 61837,
+    "viceCaptainPlayerId": 66044
+  },
+  {
+    "leagueTeamId": "vedant",
+    "windowIndex": 2,
+    "fromMatch": 36,
+    "toMatch": 70,
+    "captainPlayerId": 61837,
+    "viceCaptainPlayerId": 63961
+  },
+  {
+    "leagueTeamId": "kashish",
+    "windowIndex": 1,
+    "fromMatch": 1,
+    "toMatch": 35,
+    "captainPlayerId": 3993,
+    "viceCaptainPlayerId": 69238
+  },
+  {
+    "leagueTeamId": "kashish",
+    "windowIndex": 2,
+    "fromMatch": 36,
+    "toMatch": 70,
+    "captainPlayerId": 3993,
+    "viceCaptainPlayerId": 70222
+  },
+  {
+    "leagueTeamId": "tanmay",
+    "windowIndex": 1,
+    "fromMatch": 1,
+    "toMatch": 35,
+    "captainPlayerId": 64219,
+    "viceCaptainPlayerId": 64861
+  },
+  {
+    "leagueTeamId": "tanmay",
+    "windowIndex": 2,
+    "fromMatch": 36,
+    "toMatch": 70,
+    "captainPlayerId": 3852,
+    "viceCaptainPlayerId": 64219
+  }
+]

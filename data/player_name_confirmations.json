@@ -1,0 +1,1352 @@
+[
+  {
+    "csvPlayerName": "Ishan Kishan",
+    "csvTeamShortName": "SRH",
+    "apiPlayerName": "Ishan Kishan",
+    "apiTeamName": "Sunrisers Hyderabad",
+    "apiTeamShortName": "SRH",
+    "resolvedPlayerId": 64712,
+    "resolvedTeamId": 1379,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Abhishek Sharma",
+    "csvTeamShortName": "SRH",
+    "apiPlayerName": "Abhishek Sharma",
+    "apiTeamName": "Sunrisers Hyderabad",
+    "apiTeamShortName": "SRH",
+    "resolvedPlayerId": 66799,
+    "resolvedTeamId": 1379,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Heinrich Klaasen",
+    "csvTeamShortName": "SRH",
+    "apiPlayerName": "Heinrich Klaasen",
+    "apiTeamName": "Sunrisers Hyderabad",
+    "apiTeamShortName": "SRH",
+    "resolvedPlayerId": 59736,
+    "resolvedTeamId": 1379,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Nitish Kumar Reddy",
+    "csvTeamShortName": "SRH",
+    "apiPlayerName": "Nitish Kumar Reddy",
+    "apiTeamName": "Sunrisers Hyderabad",
+    "apiTeamShortName": "SRH",
+    "resolvedPlayerId": 74837,
+    "resolvedTeamId": 1379,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Travis Head",
+    "csvTeamShortName": "SRH",
+    "apiPlayerName": "Travis Head",
+    "apiTeamName": "Sunrisers Hyderabad",
+    "apiTeamShortName": "SRH",
+    "resolvedPlayerId": 62023,
+    "resolvedTeamId": 1379,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Jaydev Unadkat",
+    "csvTeamShortName": "SRH",
+    "apiPlayerName": "Jaydev Unadkat",
+    "apiTeamName": "Sunrisers Hyderabad",
+    "apiTeamShortName": "SRH",
+    "resolvedPlayerId": 5448,
+    "resolvedTeamId": 1379,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Liam Livingstone",
+    "csvTeamShortName": "SRH",
+    "apiPlayerName": "Liam Livingstone",
+    "apiTeamName": "Sunrisers Hyderabad",
+    "apiTeamShortName": "SRH",
+    "resolvedPlayerId": 63940,
+    "resolvedTeamId": 1379,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Pat Cummins",
+    "csvTeamShortName": "SRH",
+    "apiPlayerName": "Pat Cummins",
+    "apiTeamName": "Sunrisers Hyderabad",
+    "apiTeamShortName": "SRH",
+    "resolvedPlayerId": 56964,
+    "resolvedTeamId": 1379,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Harshal Patel",
+    "csvTeamShortName": "SRH",
+    "apiPlayerName": "Harshal Patel",
+    "apiTeamName": "Sunrisers Hyderabad",
+    "apiTeamShortName": "SRH",
+    "resolvedPlayerId": 5407,
+    "resolvedTeamId": 1379,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Brydon Carse",
+    "csvTeamShortName": "SRH",
+    "apiPlayerName": "Brydon Carse",
+    "apiTeamName": "Sunrisers Hyderabad",
+    "apiTeamShortName": "SRH",
+    "resolvedPlayerId": 65090,
+    "resolvedTeamId": 1379,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "KL Rahul",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "KL Rahul",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 60122,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Sameer Rizvi",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Sameer Rizvi",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 71376,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Tristan Stubbs",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Tristan Stubbs",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 74761,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Nitish Rana",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Nitish Rana",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 63649,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Axar Patel",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Axar Patel",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 62576,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Pathum Nissanka",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Pathum Nissanka",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 66368,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Kuldeep Yadav",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Kuldeep Yadav",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 63187,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Lungi Ngidi",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Lungi Ngidi",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 64225,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "David Miller",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "David Miller",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 5313,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Mukesh Kumar",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Mukesh Kumar",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 65723,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "T Natarajan",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "T Natarajan",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 65160,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Vipraj Nigam",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Vipraj Nigam",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 88677,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Ashutosh Sharma",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Ashutosh Sharma",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 68176,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Abishek Porel",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Abishek Porel",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 82442,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Kyle Jamieson",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Kyle Jamieson",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 63865,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Virat Kohli",
+    "csvTeamShortName": "RCB",
+    "apiPlayerName": "Virat Kohli",
+    "apiTeamName": "Royal Challengers Bengaluru",
+    "apiTeamShortName": "RCB",
+    "resolvedPlayerId": 3993,
+    "resolvedTeamId": 1105,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Devdutt Padikkal",
+    "csvTeamShortName": "RCB",
+    "apiPlayerName": "Devdutt Padikkal",
+    "apiTeamName": "Royal Challengers Bengaluru",
+    "apiTeamShortName": "RCB",
+    "resolvedPlayerId": 67589,
+    "resolvedTeamId": 1105,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Bhuvneshwar Kumar",
+    "csvTeamShortName": "RCB",
+    "apiPlayerName": "Bhuvneshwar Kumar",
+    "apiTeamName": "Royal Challengers Bengaluru",
+    "apiTeamShortName": "RCB",
+    "resolvedPlayerId": 5132,
+    "resolvedTeamId": 1105,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Rajat Patidar",
+    "csvTeamShortName": "RCB",
+    "apiPlayerName": "Rajat Patidar",
+    "apiTeamName": "Royal Challengers Bengaluru",
+    "apiTeamShortName": "RCB",
+    "resolvedPlayerId": 65687,
+    "resolvedTeamId": 1105,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Phil Salt",
+    "csvTeamShortName": "RCB",
+    "apiPlayerName": "Phil Salt",
+    "apiTeamName": "Royal Challengers Bengaluru",
+    "apiTeamShortName": "RCB",
+    "resolvedPlayerId": 65632,
+    "resolvedTeamId": 1105,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Krunal Pandya",
+    "csvTeamShortName": "RCB",
+    "apiPlayerName": "Krunal Pandya",
+    "apiTeamName": "Royal Challengers Bengaluru",
+    "apiTeamShortName": "RCB",
+    "resolvedPlayerId": 63788,
+    "resolvedTeamId": 1105,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Tim David",
+    "csvTeamShortName": "RCB",
+    "apiPlayerName": "Tim David",
+    "apiTeamName": "Royal Challengers Bengaluru",
+    "apiTeamShortName": "RCB",
+    "resolvedPlayerId": 67402,
+    "resolvedTeamId": 1105,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Suyash Sharma",
+    "csvTeamShortName": "RCB",
+    "apiPlayerName": "Suyash Sharma",
+    "apiTeamName": "Royal Challengers Bengaluru",
+    "apiTeamShortName": "RCB",
+    "resolvedPlayerId": 100564,
+    "resolvedTeamId": 1105,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Rasikh Salam",
+    "csvTeamShortName": "RCB",
+    "apiPlayerName": "Rasikh Salam",
+    "apiTeamName": "Royal Challengers Bengaluru",
+    "apiTeamShortName": "RCB",
+    "resolvedPlayerId": 70296,
+    "resolvedTeamId": 1105,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Jitesh Sharma",
+    "csvTeamShortName": "RCB",
+    "apiPlayerName": "Jitesh Sharma",
+    "apiTeamName": "Royal Challengers Bengaluru",
+    "apiTeamShortName": "RCB",
+    "resolvedPlayerId": 64724,
+    "resolvedTeamId": 1105,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Romario Shepherd",
+    "csvTeamShortName": "RCB",
+    "apiPlayerName": "Romario Shepherd",
+    "apiTeamName": "Royal Challengers Bengaluru",
+    "apiTeamShortName": "RCB",
+    "resolvedPlayerId": 66243,
+    "resolvedTeamId": 1105,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Jacob Bethell",
+    "csvTeamShortName": "RCB",
+    "apiPlayerName": "Jacob Bethell",
+    "apiTeamName": "Royal Challengers Bengaluru",
+    "apiTeamShortName": "RCB",
+    "resolvedPlayerId": 85736,
+    "resolvedTeamId": 1105,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Venkatesh Iyer",
+    "csvTeamShortName": "RCB",
+    "apiPlayerName": "Venkatesh Iyer",
+    "apiTeamName": "Royal Challengers Bengaluru",
+    "apiTeamShortName": "RCB",
+    "resolvedPlayerId": 65430,
+    "resolvedTeamId": 1105,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Prabhsimran Singh",
+    "csvTeamShortName": "PBKS",
+    "apiPlayerName": "Prabhsimran Singh",
+    "apiTeamName": "Punjab Kings",
+    "apiTeamShortName": "PBKS",
+    "resolvedPlayerId": 70222,
+    "resolvedTeamId": 1107,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Shreyas Iyer",
+    "csvTeamShortName": "PBKS",
+    "apiPlayerName": "Shreyas Iyer",
+    "apiTeamName": "Punjab Kings",
+    "apiTeamShortName": "PBKS",
+    "resolvedPlayerId": 63961,
+    "resolvedTeamId": 1107,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Priyansh Arya",
+    "csvTeamShortName": "PBKS",
+    "apiPlayerName": "Priyansh Arya",
+    "apiTeamName": "Punjab Kings",
+    "apiTeamShortName": "PBKS",
+    "resolvedPlayerId": 71366,
+    "resolvedTeamId": 1107,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Cooper Connolly",
+    "csvTeamShortName": "PBKS",
+    "apiPlayerName": "Cooper Connolly",
+    "apiTeamName": "Punjab Kings",
+    "apiTeamShortName": "PBKS",
+    "resolvedPlayerId": 74410,
+    "resolvedTeamId": 1107,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Arshdeep Singh",
+    "csvTeamShortName": "PBKS",
+    "apiPlayerName": "Arshdeep Singh",
+    "apiTeamName": "Punjab Kings",
+    "apiTeamShortName": "PBKS",
+    "resolvedPlayerId": 67905,
+    "resolvedTeamId": 1107,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Shashank Singh",
+    "csvTeamShortName": "PBKS",
+    "apiPlayerName": "Shashank Singh",
+    "apiTeamName": "Punjab Kings",
+    "apiTeamShortName": "PBKS",
+    "resolvedPlayerId": 63520,
+    "resolvedTeamId": 1107,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Marco Jansen",
+    "csvTeamShortName": "PBKS",
+    "apiPlayerName": "Marco Jansen",
+    "apiTeamName": "Punjab Kings",
+    "apiTeamShortName": "PBKS",
+    "resolvedPlayerId": 69409,
+    "resolvedTeamId": 1107,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Yuzvendra Chahal",
+    "csvTeamShortName": "PBKS",
+    "apiPlayerName": "Yuzvendra Chahal",
+    "apiTeamName": "Punjab Kings",
+    "apiTeamShortName": "PBKS",
+    "resolvedPlayerId": 9844,
+    "resolvedTeamId": 1107,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Nehal Wadhera",
+    "csvTeamShortName": "PBKS",
+    "apiPlayerName": "Nehal Wadhera",
+    "apiTeamName": "Punjab Kings",
+    "apiTeamShortName": "PBKS",
+    "resolvedPlayerId": 69657,
+    "resolvedTeamId": 1107,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Marcus Stoinis",
+    "csvTeamShortName": "PBKS",
+    "apiPlayerName": "Marcus Stoinis",
+    "apiTeamName": "Punjab Kings",
+    "apiTeamShortName": "PBKS",
+    "resolvedPlayerId": 4311,
+    "resolvedTeamId": 1107,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Harpreet Brar",
+    "csvTeamShortName": "PBKS",
+    "apiPlayerName": "Harpreet Brar",
+    "apiTeamName": "Punjab Kings",
+    "apiTeamShortName": "PBKS",
+    "resolvedPlayerId": 70500,
+    "resolvedTeamId": 1107,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Lockie Ferguson",
+    "csvTeamShortName": "PBKS",
+    "apiPlayerName": "Lockie Ferguson",
+    "apiTeamName": "Punjab Kings",
+    "apiTeamShortName": "PBKS",
+    "resolvedPlayerId": 63719,
+    "resolvedTeamId": 1107,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Mitchell Owen",
+    "csvTeamShortName": "PBKS",
+    "apiPlayerName": "Mitchell Owen",
+    "apiTeamName": "Punjab Kings",
+    "apiTeamShortName": "PBKS",
+    "resolvedPlayerId": 81813,
+    "resolvedTeamId": 1107,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Tilak Varma",
+    "csvTeamShortName": "MI",
+    "apiPlayerName": "Tilak Varma",
+    "apiTeamName": "Mumbai Indians",
+    "apiTeamShortName": "MI",
+    "resolvedPlayerId": 70761,
+    "resolvedTeamId": 1111,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Naman Dhir",
+    "csvTeamShortName": "MI",
+    "apiPlayerName": "Naman Dhir",
+    "apiTeamName": "Mumbai Indians",
+    "apiTeamShortName": "MI",
+    "resolvedPlayerId": 100353,
+    "resolvedTeamId": 1111,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Suryakumar Yadav",
+    "csvTeamShortName": "MI",
+    "apiPlayerName": "Suryakumar Yadav",
+    "apiTeamName": "Mumbai Indians",
+    "apiTeamShortName": "MI",
+    "resolvedPlayerId": 11803,
+    "resolvedTeamId": 1111,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Hardik Pandya",
+    "csvTeamShortName": "MI",
+    "apiPlayerName": "Hardik Pandya",
+    "apiTeamName": "Mumbai Indians",
+    "apiTeamShortName": "MI",
+    "resolvedPlayerId": 63751,
+    "resolvedTeamId": 1111,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Quinton de Kock",
+    "csvTeamShortName": "MI",
+    "apiPlayerName": "Quinton de Kock",
+    "apiTeamName": "Mumbai Indians",
+    "apiTeamShortName": "MI",
+    "resolvedPlayerId": 28035,
+    "resolvedTeamId": 1111,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Ryan Rickelton",
+    "csvTeamShortName": "MI",
+    "apiPlayerName": "Ryan Rickelton",
+    "apiTeamName": "Mumbai Indians",
+    "apiTeamShortName": "MI",
+    "resolvedPlayerId": 64941,
+    "resolvedTeamId": 1111,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Rohit Sharma",
+    "csvTeamShortName": "MI",
+    "apiPlayerName": "Rohit Sharma",
+    "apiTeamName": "Mumbai Indians",
+    "apiTeamShortName": "MI",
+    "resolvedPlayerId": 3852,
+    "resolvedTeamId": 1111,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Mitchell Santner",
+    "csvTeamShortName": "MI",
+    "apiPlayerName": "Mitchell Santner",
+    "apiTeamName": "Mumbai Indians",
+    "apiTeamShortName": "MI",
+    "resolvedPlayerId": 57903,
+    "resolvedTeamId": 1111,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Ashwani Kumar",
+    "csvTeamShortName": "MI",
+    "apiPlayerName": "Ashwani Kumar",
+    "apiTeamName": "Mumbai Indians",
+    "apiTeamShortName": "MI",
+    "resolvedPlayerId": 74296,
+    "resolvedTeamId": 1111,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Jasprit Bumrah",
+    "csvTeamShortName": "MI",
+    "apiPlayerName": "Jasprit Bumrah",
+    "apiTeamName": "Mumbai Indians",
+    "apiTeamShortName": "MI",
+    "resolvedPlayerId": 63755,
+    "resolvedTeamId": 1111,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Deepak Chahar",
+    "csvTeamShortName": "MI",
+    "apiPlayerName": "Deepak Chahar",
+    "apiTeamName": "Mumbai Indians",
+    "apiTeamShortName": "MI",
+    "resolvedPlayerId": 59547,
+    "resolvedTeamId": 1111,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Trent Boult",
+    "csvTeamShortName": "MI",
+    "apiPlayerName": "Trent Boult",
+    "apiTeamName": "Mumbai Indians",
+    "apiTeamShortName": "MI",
+    "resolvedPlayerId": 4338,
+    "resolvedTeamId": 1111,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Will Jacks",
+    "csvTeamShortName": "MI",
+    "apiPlayerName": "Will Jacks",
+    "apiTeamName": "Mumbai Indians",
+    "apiTeamShortName": "MI",
+    "resolvedPlayerId": 66927,
+    "resolvedTeamId": 1111,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Prince Yadav",
+    "csvTeamShortName": "LSG",
+    "apiPlayerName": "Prince Yadav",
+    "apiTeamName": "Lucknow Super Giants",
+    "apiTeamShortName": "LSG",
+    "resolvedPlayerId": 100570,
+    "resolvedTeamId": 2954,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Rishabh Pant",
+    "csvTeamShortName": "LSG",
+    "apiPlayerName": "Rishabh Pant",
+    "apiTeamName": "Lucknow Super Giants",
+    "apiTeamShortName": "LSG",
+    "resolvedPlayerId": 65756,
+    "resolvedTeamId": 2954,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Mitchell Marsh",
+    "csvTeamShortName": "LSG",
+    "apiPlayerName": "Mitchell Marsh",
+    "apiTeamName": "Lucknow Super Giants",
+    "apiTeamShortName": "LSG",
+    "resolvedPlayerId": 10094,
+    "resolvedTeamId": 2954,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Aiden Markram",
+    "csvTeamShortName": "LSG",
+    "apiPlayerName": "Aiden Markram",
+    "apiTeamName": "Lucknow Super Giants",
+    "apiTeamShortName": "LSG",
+    "resolvedPlayerId": 64219,
+    "resolvedTeamId": 2954,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Ayush Badoni",
+    "csvTeamShortName": "LSG",
+    "apiPlayerName": "Ayush Badoni",
+    "apiTeamName": "Lucknow Super Giants",
+    "apiTeamShortName": "LSG",
+    "resolvedPlayerId": 69656,
+    "resolvedTeamId": 2954,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Mohammad Shami",
+    "csvTeamShortName": "LSG",
+    "apiPlayerName": "Mohammad Shami",
+    "apiTeamName": "Lucknow Super Giants",
+    "apiTeamShortName": "LSG",
+    "resolvedPlayerId": 28994,
+    "resolvedTeamId": 2954,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Avesh Khan",
+    "csvTeamShortName": "LSG",
+    "apiPlayerName": "Avesh Khan",
+    "apiTeamName": "Lucknow Super Giants",
+    "apiTeamShortName": "LSG",
+    "resolvedPlayerId": 64511,
+    "resolvedTeamId": 2954,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Nicholas Pooran",
+    "csvTeamShortName": "LSG",
+    "apiPlayerName": "Nicholas Pooran",
+    "apiTeamName": "Lucknow Super Giants",
+    "apiTeamShortName": "LSG",
+    "resolvedPlayerId": 63726,
+    "resolvedTeamId": 2954,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Shahbaz Ahmed",
+    "csvTeamShortName": "LSG",
+    "apiPlayerName": "Shahbaz Ahmed",
+    "apiTeamName": "Lucknow Super Giants",
+    "apiTeamShortName": "LSG",
+    "resolvedPlayerId": 58223,
+    "resolvedTeamId": 2954,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Anrich Nortje",
+    "csvTeamShortName": "LSG",
+    "apiPlayerName": "Anrich Nortje",
+    "apiTeamName": "Lucknow Super Giants",
+    "apiTeamShortName": "LSG",
+    "resolvedPlayerId": 63641,
+    "resolvedTeamId": 2954,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Mayank Yadav",
+    "csvTeamShortName": "LSG",
+    "apiPlayerName": "Mayank Yadav",
+    "apiTeamName": "Lucknow Super Giants",
+    "apiTeamShortName": "LSG",
+    "resolvedPlayerId": 90501,
+    "resolvedTeamId": 2954,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Josh Inglis",
+    "csvTeamShortName": "LSG",
+    "apiPlayerName": "Josh Inglis",
+    "apiTeamName": "Lucknow Super Giants",
+    "apiTeamShortName": "LSG",
+    "resolvedPlayerId": 65893,
+    "resolvedTeamId": 2954,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Naman Tiwari",
+    "csvTeamShortName": "LSG",
+    "apiPlayerName": "Naman Tiwari",
+    "apiTeamName": "Lucknow Super Giants",
+    "apiTeamShortName": "LSG",
+    "resolvedPlayerId": 88633,
+    "resolvedTeamId": 2954,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Rinku Singh",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Rinku Singh",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 64727,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Cameron Green",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Cameron Green",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 66870,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Angkrish Raghuvanshi",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Angkrish Raghuvanshi",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 88352,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Sunil Narine",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Sunil Narine",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 11229,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Ajinkya Rahane",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Ajinkya Rahane",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 3991,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Anukul Roy",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Anukul Roy",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 66983,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Rovman Powell",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Rovman Powell",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 65291,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Ramandeep Singh",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Ramandeep Singh",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 66953,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Varun Chakaravarthy",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Varun Chakaravarthy",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 67469,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Finn Allen",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Finn Allen",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 66046,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Akash Deep",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Akash Deep",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 71447,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Harshit Rana",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Harshit Rana",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 93526,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Matheesha Pathirana",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Matheesha Pathirana",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 73830,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Rachin Ravindra",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Rachin Ravindra",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 66053,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Rahul Tripathi",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Rahul Tripathi",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 41229,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Umran Malik",
+    "csvTeamShortName": "KKR",
+    "apiPlayerName": "Umran Malik",
+    "apiTeamName": "Kolkata Knight Riders",
+    "apiTeamShortName": "KKR",
+    "resolvedPlayerId": 82969,
+    "resolvedTeamId": 1106,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Shubman Gill",
+    "csvTeamShortName": "GT",
+    "apiPlayerName": "Shubman Gill",
+    "apiTeamName": "Gujarat Titans",
+    "apiTeamShortName": "GT",
+    "resolvedPlayerId": 66818,
+    "resolvedTeamId": 2955,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Sai Sudharsan",
+    "csvTeamShortName": "GT",
+    "apiPlayerName": "Sai Sudharsan",
+    "apiTeamName": "Gujarat Titans",
+    "apiTeamShortName": "GT",
+    "resolvedPlayerId": 69500,
+    "resolvedTeamId": 2955,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Kagiso Rabada",
+    "csvTeamShortName": "GT",
+    "apiPlayerName": "Kagiso Rabada",
+    "apiTeamName": "Gujarat Titans",
+    "apiTeamShortName": "GT",
+    "resolvedPlayerId": 63611,
+    "resolvedTeamId": 2955,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Jos Buttler",
+    "csvTeamShortName": "GT",
+    "apiPlayerName": "Jos Buttler",
+    "apiTeamName": "Gujarat Titans",
+    "apiTeamShortName": "GT",
+    "resolvedPlayerId": 9782,
+    "resolvedTeamId": 2955,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Prasidh Krishna",
+    "csvTeamShortName": "GT",
+    "apiPlayerName": "Prasidh Krishna",
+    "apiTeamName": "Gujarat Titans",
+    "apiTeamShortName": "GT",
+    "resolvedPlayerId": 65702,
+    "resolvedTeamId": 2955,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Washington Sundar",
+    "csvTeamShortName": "GT",
+    "apiPlayerName": "Washington Sundar",
+    "apiTeamName": "Gujarat Titans",
+    "apiTeamShortName": "GT",
+    "resolvedPlayerId": 65859,
+    "resolvedTeamId": 2955,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Rashid Khan",
+    "csvTeamShortName": "GT",
+    "apiPlayerName": "Rashid Khan",
+    "apiTeamName": "Gujarat Titans",
+    "apiTeamShortName": "GT",
+    "resolvedPlayerId": 65748,
+    "resolvedTeamId": 2955,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Mohammed Siraj",
+    "csvTeamShortName": "GT",
+    "apiPlayerName": "Mohammed Siraj",
+    "apiTeamName": "Gujarat Titans",
+    "apiTeamShortName": "GT",
+    "resolvedPlayerId": 65799,
+    "resolvedTeamId": 2955,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Glenn Phillips",
+    "csvTeamShortName": "GT",
+    "apiPlayerName": "Glenn Phillips",
+    "apiTeamName": "Gujarat Titans",
+    "apiTeamShortName": "GT",
+    "resolvedPlayerId": 65295,
+    "resolvedTeamId": 2955,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Rahul Tewatia",
+    "csvTeamShortName": "GT",
+    "apiPlayerName": "Rahul Tewatia",
+    "apiTeamName": "Gujarat Titans",
+    "apiTeamShortName": "GT",
+    "resolvedPlayerId": 64440,
+    "resolvedTeamId": 2955,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Jason Holder",
+    "csvTeamShortName": "GT",
+    "apiPlayerName": "Jason Holder",
+    "apiTeamName": "Gujarat Titans",
+    "apiTeamShortName": "GT",
+    "resolvedPlayerId": 10232,
+    "resolvedTeamId": 2955,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Sai Kishore",
+    "csvTeamShortName": "GT",
+    "apiPlayerName": "Sai Kishore",
+    "apiTeamName": "Gujarat Titans",
+    "apiTeamShortName": "GT",
+    "resolvedPlayerId": 66438,
+    "resolvedTeamId": 2955,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Tom Banton",
+    "csvTeamShortName": "GT",
+    "apiPlayerName": "Tom Banton",
+    "apiTeamName": "Gujarat Titans",
+    "apiTeamShortName": "GT",
+    "resolvedPlayerId": 66923,
+    "resolvedTeamId": 2955,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Auqib Nabi",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Auqib Nabi",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 70172,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Mitchell Starc",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Mitchell Starc",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 10053,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Prithvi Shaw",
+    "csvTeamShortName": "DC",
+    "apiPlayerName": "Prithvi Shaw",
+    "apiTeamName": "Delhi Capitals",
+    "apiTeamShortName": "DC",
+    "resolvedPlayerId": 66812,
+    "resolvedTeamId": 1109,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Jofra Archer",
+    "csvTeamShortName": "RR",
+    "apiPlayerName": "Jofra Archer",
+    "apiTeamName": "Rajasthan Royals",
+    "apiTeamShortName": "RR",
+    "resolvedPlayerId": 64254,
+    "resolvedTeamId": 1110,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Vaibhav Sooryavanshi",
+    "csvTeamShortName": "RR",
+    "apiPlayerName": "Vaibhav Sooryavanshi",
+    "apiTeamName": "Rajasthan Royals",
+    "apiTeamShortName": "RR",
+    "resolvedPlayerId": 114349,
+    "resolvedTeamId": 1110,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Dhruv Jurel",
+    "csvTeamShortName": "RR",
+    "apiPlayerName": "Dhruv Jurel",
+    "apiTeamName": "Rajasthan Royals",
+    "apiTeamShortName": "RR",
+    "resolvedPlayerId": 71370,
+    "resolvedTeamId": 1110,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Yashasvi Jaiswal",
+    "csvTeamShortName": "RR",
+    "apiPlayerName": "Yashasvi Jaiswal",
+    "apiTeamName": "Rajasthan Royals",
+    "apiTeamShortName": "RR",
+    "resolvedPlayerId": 69238,
+    "resolvedTeamId": 1110,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Ravindra Jadeja",
+    "csvTeamShortName": "RR",
+    "apiPlayerName": "Ravindra Jadeja",
+    "apiTeamName": "Rajasthan Royals",
+    "apiTeamShortName": "RR",
+    "resolvedPlayerId": 3850,
+    "resolvedTeamId": 1110,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Ravi Bishnoi",
+    "csvTeamShortName": "RR",
+    "apiPlayerName": "Ravi Bishnoi",
+    "apiTeamName": "Rajasthan Royals",
+    "apiTeamShortName": "RR",
+    "resolvedPlayerId": 71288,
+    "resolvedTeamId": 1110,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Riyan Parag",
+    "csvTeamShortName": "RR",
+    "apiPlayerName": "Riyan Parag",
+    "apiTeamName": "Rajasthan Royals",
+    "apiTeamShortName": "RR",
+    "resolvedPlayerId": 66939,
+    "resolvedTeamId": 1110,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Sandeep Sharma",
+    "csvTeamShortName": "RR",
+    "apiPlayerName": "Sandeep Sharma",
+    "apiTeamName": "Rajasthan Royals",
+    "apiTeamShortName": "RR",
+    "resolvedPlayerId": 10116,
+    "resolvedTeamId": 1110,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Shimron Hetmyer",
+    "csvTeamShortName": "RR",
+    "apiPlayerName": "Shimron Hetmyer",
+    "apiTeamName": "Rajasthan Royals",
+    "apiTeamShortName": "RR",
+    "resolvedPlayerId": 64861,
+    "resolvedTeamId": 1110,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Adam Milne",
+    "csvTeamShortName": "RR",
+    "apiPlayerName": "Adam Milne",
+    "apiTeamName": "Rajasthan Royals",
+    "apiTeamShortName": "RR",
+    "resolvedPlayerId": 11933,
+    "resolvedTeamId": 1110,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Kuldeep Sen",
+    "csvTeamShortName": "RR",
+    "apiPlayerName": "Kuldeep Sen",
+    "apiTeamName": "Rajasthan Royals",
+    "apiTeamShortName": "RR",
+    "resolvedPlayerId": 70402,
+    "resolvedTeamId": 1110,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Sanju Samson",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "Sanju Samson",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 61837,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Anshul Kamboj",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "Anshul Kamboj",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 71151,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Jamie Overton",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "Jamie Overton",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 58482,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Ayush Mhatre",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "Ayush Mhatre",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 120157,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Noor Ahmad",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "Noor Ahmad",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 71411,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Shivam Dube",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "Shivam Dube",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 66044,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Akeal Hosein",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "Akeal Hosein",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 57239,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Ruturaj Gaikwad",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "Ruturaj Gaikwad",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 66584,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Dewald Brevis",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "Dewald Brevis",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 84562,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Kartik Sharma",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "Kartik Sharma",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 129073,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Prashant Veer",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "Prashant Veer",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 98636,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Khaleel Ahmed",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "Khaleel Ahmed",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 65867,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Matt Henry",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "Matt Henry",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 60544,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "Rahul Chahar",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "Rahul Chahar",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 66823,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  },
+  {
+    "csvPlayerName": "MS Dhoni",
+    "csvTeamShortName": "CSK",
+    "apiPlayerName": "MS Dhoni",
+    "apiTeamName": "Chennai Super Kings",
+    "apiTeamShortName": "CSK",
+    "resolvedPlayerId": 3676,
+    "resolvedTeamId": 1108,
+    "confirmationMethod": "exact_normalized_name_and_team"
+  }
+]
