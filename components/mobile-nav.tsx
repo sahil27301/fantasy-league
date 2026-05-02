@@ -9,6 +9,31 @@ const links = [
   { href: "/progression", label: "Progression" },
 ];
 
+export function DesktopNav() {
+  const pathname = usePathname();
+
+  return (
+    <nav className="mb-6 hidden md:block">
+      <ul className="glass-card-strong flex w-fit items-center gap-2 rounded-2xl px-2 py-2 text-sm font-semibold">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className={`rounded-xl px-4 py-2 transition ${
+                pathname === link.href
+                  ? "bg-slate-900 text-white shadow-sm"
+                  : "text-slate-700 hover:bg-slate-100"
+              }`}
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
 export function MobileNav() {
   const pathname = usePathname();
 
