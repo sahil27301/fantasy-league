@@ -122,8 +122,10 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
   >();
   const bonusByTeam = new Map<string, { captainBonus: number; viceCaptainBonus: number }>();
   const transferImpactByTeam = new Map<string, number>();
-  const incomingWindow2ByTeam = new Map<string, Set<number>>();
-  const outgoingWindow2ByTeam = new Map<string, Set<number>>();
+  const captainWindow1ByTeam = new Map<
+    string,
+    { captainPlayerId: number; viceCaptainPlayerId: number } | null
+  >();
   const windowBonusByTeam = new Map<
     string,
     Map<1 | 2 | 3, { captainBonus: number; viceCaptainBonus: number }>
@@ -134,26 +136,18 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
     contributorByTeam.set(team.id, new Map());
     bonusByTeam.set(team.id, { captainBonus: 0, viceCaptainBonus: 0 });
     transferImpactByTeam.set(team.id, 0);
-    const window1Set = new Set(
-      roster
-        .filter(
-          (entry) =>
-            entry.ownerName.toLowerCase() === team.ownerName.toLowerCase() && entry.windowIndex === 1,
-        )
-        .map((entry) => entry.resolvedPlayerId),
+    const window1Leadership = captainWindows.find(
+      (window) => window.leagueTeamId === team.id && window.windowIndex === 1,
     );
-    const window2Set = new Set(
-      roster
-        .filter(
-          (entry) =>
-            entry.ownerName.toLowerCase() === team.ownerName.toLowerCase() && entry.windowIndex === 2,
-        )
-        .map((entry) => entry.resolvedPlayerId),
+    captainWindow1ByTeam.set(
+      team.id,
+      window1Leadership
+        ? {
+            captainPlayerId: window1Leadership.captainPlayerId,
+            viceCaptainPlayerId: window1Leadership.viceCaptainPlayerId,
+          }
+        : null,
     );
-    const incoming = new Set<number>([...window2Set].filter((playerId) => !window1Set.has(playerId)));
-    const outgoing = new Set<number>([...window1Set].filter((playerId) => !window2Set.has(playerId)));
-    incomingWindow2ByTeam.set(team.id, incoming);
-    outgoingWindow2ByTeam.set(team.id, outgoing);
     windowBonusByTeam.set(
       team.id,
       new Map([
@@ -187,8 +181,10 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
           window.leagueTeamId === team.id &&
           window.windowIndex === activeWindow,
       );
+      const baselineWindow1Leadership = captainWindow1ByTeam.get(team.id);
 
       let matchPoints = 0;
+      let leadershipBonusThisMatch = 0;
       for (const player of teamRoster) {
         const basePoints = pointsLookup.get(player.resolvedPlayerId)?.get(matchNumber) ?? 0;
         let multiplier = 1;
@@ -203,6 +199,7 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
         const boosted = basePoints * multiplier;
         const bonus = boosted - basePoints;
         matchPoints += boosted;
+        leadershipBonusThisMatch = Number((leadershipBonusThisMatch + bonus).toFixed(2));
 
         const teamContributors = contributorByTeam.get(team.id)!;
         const existing = teamContributors.get(player.resolvedPlayerId) ?? {
@@ -238,19 +235,25 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
       }
 
       if (matchNumber >= 36 && matchNumber <= 70) {
-        const incomingSet = incomingWindow2ByTeam.get(team.id)!;
-        const outgoingSet = outgoingWindow2ByTeam.get(team.id)!;
-        let incomingPoints = 0;
-        let outgoingPoints = 0;
-        for (const playerId of incomingSet) {
-          incomingPoints += pointsLookup.get(playerId)?.get(matchNumber) ?? 0;
+        let baselineWindow1Bonus = 0;
+        for (const player of teamRoster) {
+          const basePoints = pointsLookup.get(player.resolvedPlayerId)?.get(matchNumber) ?? 0;
+          if (baselineWindow1Leadership?.captainPlayerId === player.resolvedPlayerId) {
+            baselineWindow1Bonus = Number((baselineWindow1Bonus + basePoints).toFixed(2));
+          } else if (
+            baselineWindow1Leadership?.viceCaptainPlayerId === player.resolvedPlayerId
+          ) {
+            baselineWindow1Bonus = Number((baselineWindow1Bonus + basePoints * 0.5).toFixed(2));
+          }
         }
-        for (const playerId of outgoingSet) {
-          outgoingPoints += pointsLookup.get(playerId)?.get(matchNumber) ?? 0;
-        }
+        const leadershipDelta = Number(
+          (leadershipBonusThisMatch - baselineWindow1Bonus).toFixed(2),
+        );
         transferImpactByTeam.set(
           team.id,
-          Number(((transferImpactByTeam.get(team.id) ?? 0) + (incomingPoints - outgoingPoints)).toFixed(2)),
+          Number(
+            ((transferImpactByTeam.get(team.id) ?? 0) + leadershipDelta).toFixed(2),
+          ),
         );
       }
 
@@ -336,6 +339,9 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
   console.info("[match-progression] Match progression built", {
     matches: sortedMatches.length,
     teams: teamSeries.length,
+    nonZeroLeadershipImpactTeams: teamSeries.filter(
+      (team) => Math.abs(team.transferImpactScore) > 0.01,
+    ).length,
   });
 
   return result;

@@ -1,7 +1,7 @@
-import Link from "next/link";
+import { HorizontalBars } from "@/components/charts/horizontal-bars";
 import { getLeagueComputation } from "@/lib/data/score-service";
 import { formatDelta, formatPoints } from "@/lib/utils/format";
-import { HorizontalBars } from "@/components/charts/horizontal-bars";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -17,14 +17,16 @@ export default async function StatsPage() {
           High-signal metrics designed to make the table more competitive.
         </p>
         <p className="mt-3 rounded-xl bg-white/80 px-3 py-2 text-xs text-slate-600 ring-1 ring-slate-200">
-          Transfer Impact = sum of incoming Window 2 player points minus outgoing Window 1
-          player points across matches 36-70.
+          Transfer Impact (W2 C/VC Net) = bonus with your Window 2 C/VC minus
+          bonus you would have got with Window 1 C/VC across matches 36-70.
         </p>
       </header>
 
       <section className="glass-card rounded-3xl p-5">
         <h2 className="text-lg font-semibold">Captain ROI Ranking</h2>
-        <p className="text-sm text-slate-500">Extra points earned from C/VC multipliers</p>
+        <p className="text-sm text-slate-500">
+          Extra points earned from C/VC multipliers
+        </p>
         <div className="mt-4">
           <HorizontalBars
             data={result.snapshot.standings
@@ -43,7 +45,9 @@ export default async function StatsPage() {
       </section>
 
       {result.snapshot.standings.map((team) => {
-        const insight = result.teamInsights.find((item) => item.leagueTeamId === team.leagueTeamId);
+        const insight = result.teamInsights.find(
+          (item) => item.leagueTeamId === team.leagueTeamId,
+        );
         if (!insight) {
           return null;
         }
@@ -64,7 +68,9 @@ export default async function StatsPage() {
             <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
               <div className="rounded-2xl bg-white/70 p-3">
                 <p className="text-slate-500">Momentum</p>
-                <p className="font-semibold">{formatDelta(insight.statsV1.rankMomentum)}</p>
+                <p className="font-semibold">
+                  {formatDelta(insight.statsV1.rankMomentum)}
+                </p>
               </div>
               <div className="rounded-2xl bg-white/70 p-3">
                 <p className="text-slate-500">Gap to Leader</p>
@@ -79,7 +85,7 @@ export default async function StatsPage() {
                 </p>
               </div>
               <div className="rounded-2xl bg-white/70 p-3">
-                <p className="text-slate-500">Transfer Impact (W2 Net)</p>
+                <p className="text-slate-500">Transfer Impact (W2 C/VC Net)</p>
                 <p className="font-semibold">
                   {formatPoints(insight.statsV2.transferImpactScore)}
                 </p>

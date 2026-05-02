@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAdminCookieName } from "@/lib/auth/admin";
 
-export async function GET(request: Request) {
+function buildLogoutResponse(request: Request) {
   const url = new URL(request.url);
   const returnTo = url.searchParams.get("returnTo") ?? "/";
 
@@ -18,4 +18,12 @@ export async function GET(request: Request) {
   });
 
   return response;
+}
+
+export async function GET(request: Request) {
+  return buildLogoutResponse(request);
+}
+
+export async function POST(request: Request) {
+  return buildLogoutResponse(request);
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getLeagueComputation } from "@/lib/data/score-service";
 import { RefreshButton } from "@/components/refresh-button";
+import { ExitAdminButton } from "@/components/exit-admin-button";
 import { formatDelta, formatPoints } from "@/lib/utils/format";
 import { HorizontalBars } from "@/components/charts/horizontal-bars";
 import { isAdminSession } from "@/lib/auth/admin";
@@ -44,14 +45,7 @@ export default async function Home() {
         </p>
         <div className="mt-4 flex flex-wrap items-center gap-3">
           {isAdmin ? <RefreshButton /> : null}
-          {isAdmin ? (
-            <Link
-              href="/api/admin/logout?returnTo=/"
-              className="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
-            >
-              Exit Admin
-            </Link>
-          ) : null}
+          {isAdmin ? <ExitAdminButton /> : null}
         </div>
       </section>
 

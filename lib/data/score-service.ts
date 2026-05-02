@@ -1,14 +1,18 @@
-import { getCaptainWindows, getLeagueTeams, getNormalizedRoster } from "@/lib/data/seed";
-import { getMatchProgression } from "@/lib/progression/match-progression";
-import { buildTeamInsights } from "@/lib/stats/insights";
-import { getLiveCache, setLiveResult } from "@/lib/state/live-cache";
+import {
+  getCaptainWindows,
+  getLeagueTeams,
+  getNormalizedRoster,
+} from "@/lib/data/seed";
 import {
   fetchLatestScoreComputation,
   persistScoreComputation,
 } from "@/lib/db/repositories/snapshots";
+import { getMatchProgression } from "@/lib/progression/match-progression";
+import { getLiveCache, setLiveResult } from "@/lib/state/live-cache";
+import { buildTeamInsights } from "@/lib/stats/insights";
+import type { ScoreComputationResult, TeamStanding } from "@/lib/types";
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import type { ScoreComputationResult, TeamStanding } from "@/lib/types";
 
 export async function getLeagueComputation(forceRefresh = false) {
   const cache = getLiveCache();
@@ -57,7 +61,9 @@ export async function getLeagueComputation(forceRefresh = false) {
 
   if (previousMatch !== undefined) {
     for (const team of progression.teams) {
-      const point = team.series.find((entry) => entry.matchNumber === previousMatch);
+      const point = team.series.find(
+        (entry) => entry.matchNumber === previousMatch,
+      );
       if (point) {
         previousRankByTeam.set(team.leagueTeamId, point.rank);
         previousPointsByTeam.set(team.leagueTeamId, point.cumulativePoints);
@@ -87,7 +93,10 @@ export async function getLeagueComputation(forceRefresh = false) {
     .sort((a, b) => a.rank - b.rank);
 
   const transferImpactByTeam = new Map(
-    progression.teams.map((team) => [team.leagueTeamId, team.transferImpactScore]),
+    progression.teams.map((team) => [
+      team.leagueTeamId,
+      team.transferImpactScore,
+    ]),
   );
 
   const result: ScoreComputationResult = {
@@ -104,9 +113,12 @@ export async function getLeagueComputation(forceRefresh = false) {
   try {
     await persistScoreComputation(result);
   } catch (error) {
-    console.error("[score-service] Persistence failed, serving in-memory only", {
-      error,
-    });
+    console.error(
+      "[score-service] Persistence failed, serving in-memory only",
+      {
+        error,
+      },
+    );
   }
   return result;
 }

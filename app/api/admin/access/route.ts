@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import { getAdminAccessKey, getAdminCookieName } from "@/lib/auth/admin";
+import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -21,7 +21,10 @@ export async function GET(request: Request) {
   }
 
   if (key !== configuredKey) {
-    return NextResponse.json({ error: "Invalid admin access key" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Invalid admin access key" },
+      { status: 401 },
+    );
   }
 
   const response = NextResponse.redirect(new URL(returnTo, url.origin));
