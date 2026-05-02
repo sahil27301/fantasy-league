@@ -36,9 +36,10 @@ export function TeamLeadershipBreakdown({
   const window1 = sortedWindows.find((window) => window.windowIndex === 1);
   const window2 = sortedWindows.find((window) => window.windowIndex === 2);
   const hasChanged =
-    Boolean(window1 && window2) &&
-    (window1.captainName !== window2.captainName ||
-      window1.viceCaptainName !== window2.viceCaptainName);
+    window1 && window2
+      ? window1.captainName !== window2.captainName ||
+        window1.viceCaptainName !== window2.viceCaptainName
+      : false;
 
   return (
     <>

@@ -280,7 +280,7 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
     const contributorMap = contributorByTeam.get(team.id)!;
     const contributors: TeamPlayerContribution[] = [...contributorMap.values()]
       .map((item) => {
-        const role =
+        const role: "captain" | "viceCaptain" | "normal" =
           item.captainMatches > 0 && item.captainMatches >= item.viceCaptainMatches
             ? "captain"
             : item.viceCaptainMatches > 0

@@ -85,7 +85,7 @@ export function HorizontalBars({
           },
           itemStyle: {
             borderRadius: 999,
-            color: (params: { dataIndex: number }) => {
+            color: (params: any) => {
               const entry = sorted[params.dataIndex];
               const isHighlighted =
                 highlightedLabel !== null && entry?.label === highlightedLabel;
@@ -121,7 +121,7 @@ export function HorizontalBars({
             distance: 10,
             color: "#0f172a",
             fontWeight: 700,
-            formatter: (params: { value: number }) =>
+            formatter: (params: any) =>
               formatChartValue(Number(params.value)),
           },
         },
