@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import { getAdminCookieName } from "@/lib/auth/admin";
+import { NextResponse } from "next/server";
 
 function buildLogoutResponse(request: Request) {
   const url = new URL(request.url);
