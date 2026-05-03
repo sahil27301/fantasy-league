@@ -12,6 +12,8 @@ interface HorizontalBarDatum {
 interface HorizontalBarsProps {
   data: HorizontalBarDatum[];
   highlightedLabel?: string | null;
+  highlightedLabels?: string[];
+  highlightRoles?: Record<string, "captain" | "viceCaptain">;
   onSelectLabel?: (label: string) => void;
 }
 
@@ -25,10 +27,18 @@ function formatChartValue(value: number) {
 export function HorizontalBars({
   data,
   highlightedLabel = null,
+  highlightedLabels = [],
+  highlightRoles = {},
   onSelectLabel,
 }: HorizontalBarsProps) {
   const option = useMemo<EChartsOption>(() => {
     const sorted = [...data].sort((a, b) => b.value - a.value);
+    const highlightedSet = new Set(
+      [
+        ...highlightedLabels,
+        ...(highlightedLabel ? [highlightedLabel] : []),
+      ].filter(Boolean),
+    );
     return {
       grid: {
         left: 8,
@@ -87,9 +97,23 @@ export function HorizontalBars({
             borderRadius: 999,
             color: (params: any) => {
               const entry = sorted[params.dataIndex];
-              const isHighlighted =
-                highlightedLabel !== null && entry?.label === highlightedLabel;
+              const label = entry?.label ?? "";
+              const isHighlighted = highlightedSet.has(label);
               if (isHighlighted) {
+                const role = highlightRoles[label];
+                if (role === "viceCaptain") {
+                  return {
+                    type: "linear",
+                    x: 0,
+                    y: 0,
+                    x2: 1,
+                    y2: 0,
+                    colorStops: [
+                      { offset: 0, color: "#0f172a" },
+                      { offset: 1, color: "#0284c7" },
+                    ],
+                  };
+                }
                 return {
                   type: "linear",
                   x: 0,
@@ -127,7 +151,7 @@ export function HorizontalBars({
         },
       ],
     };
-  }, [data, highlightedLabel]);
+  }, [data, highlightedLabel, highlightedLabels, highlightRoles]);
 
   return (
     <ReactECharts

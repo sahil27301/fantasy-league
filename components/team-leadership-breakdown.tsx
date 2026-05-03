@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { HorizontalBars } from "@/components/charts/horizontal-bars";
 import { formatPoints } from "@/lib/utils/format";
 import type { TeamPlayerContribution } from "@/lib/types";
@@ -24,8 +24,12 @@ export function TeamLeadershipBreakdown({
   contributors,
   leadershipWindows,
 }: TeamLeadershipBreakdownProps) {
-  const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
+  const [selectedPlayers, setSelectedPlayers] = useState<string[]>([]);
+  const [selectedRolesByPlayer, setSelectedRolesByPlayer] = useState<
+    Record<string, "captain" | "viceCaptain">
+  >({});
   const [activeWindow, setActiveWindow] = useState<1 | 2 | 3>(1);
+  const chartSectionRef = useRef<HTMLElement | null>(null);
 
   const sortedWindows = useMemo(
     () => [...leadershipWindows].sort((a, b) => a.windowIndex - b.windowIndex),
@@ -40,6 +44,42 @@ export function TeamLeadershipBreakdown({
       ? window1.captainName !== window2.captainName ||
         window1.viceCaptainName !== window2.viceCaptainName
       : false;
+
+  const handleLeadershipPlayerSelect = (
+    playerName: string,
+    role: "captain" | "viceCaptain",
+  ) => {
+    console.info("[team-leadership] Leadership player selected", {
+      playerName,
+      role,
+      activeWindow,
+    });
+    setSelectedPlayers([playerName]);
+    setSelectedRolesByPlayer({ [playerName]: role });
+    chartSectionRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  const handleWindowSelect = (window: LeadershipWindowView) => {
+    console.info("[team-leadership] Window selected", {
+      windowIndex: window.windowIndex,
+      captainName: window.captainName,
+      viceCaptainName: window.viceCaptainName,
+    });
+    setActiveWindow(window.windowIndex);
+    const labels = [...new Set([window.captainName, window.viceCaptainName])];
+    setSelectedPlayers(labels);
+    setSelectedRolesByPlayer({
+      [window.captainName]: "captain",
+      [window.viceCaptainName]: "viceCaptain",
+    });
+    chartSectionRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
 
   return (
     <>
@@ -67,7 +107,7 @@ export function TeamLeadershipBreakdown({
               <button
                 key={window.windowIndex}
                 type="button"
-                onClick={() => setActiveWindow(window.windowIndex)}
+                onClick={() => handleWindowSelect(window)}
                 className={`rounded-2xl border p-4 text-left transition ${
                   activeWindow === window.windowIndex
                     ? "border-indigo-300 bg-indigo-50/80"
@@ -80,11 +120,15 @@ export function TeamLeadershipBreakdown({
                 <p className="mt-2 text-sm text-slate-600">
                   Captain:
                   <span
-                    className="ml-1 cursor-pointer font-semibold text-slate-900 underline decoration-dotted"
+                    className={`ml-1 cursor-pointer rounded-md px-1 font-semibold underline decoration-dotted transition ${
+                      selectedPlayers.includes(window.captainName)
+                        ? "bg-indigo-100 text-indigo-700"
+                        : "text-slate-900"
+                    }`}
                     onClick={(event) => {
                       event.preventDefault();
                       event.stopPropagation();
-                      setSelectedPlayer(window.captainName);
+                      handleLeadershipPlayerSelect(window.captainName, "captain");
                     }}
                   >
                     {window.captainName}
@@ -93,11 +137,18 @@ export function TeamLeadershipBreakdown({
                 <p className="text-sm text-slate-600">
                   Vice-Captain:
                   <span
-                    className="ml-1 cursor-pointer font-semibold text-slate-900 underline decoration-dotted"
+                    className={`ml-1 cursor-pointer rounded-md px-1 font-semibold underline decoration-dotted transition ${
+                      selectedPlayers.includes(window.viceCaptainName)
+                        ? "bg-indigo-100 text-indigo-700"
+                        : "text-slate-900"
+                    }`}
                     onClick={(event) => {
                       event.preventDefault();
                       event.stopPropagation();
-                      setSelectedPlayer(window.viceCaptainName);
+                      handleLeadershipPlayerSelect(
+                        window.viceCaptainName,
+                        "viceCaptain",
+                      );
                     }}
                   >
                     {window.viceCaptainName}
@@ -122,21 +173,29 @@ export function TeamLeadershipBreakdown({
         ) : null}
       </section>
 
-      <section className="glass-card rounded-3xl p-5">
+      <section ref={chartSectionRef} className="glass-card rounded-3xl p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <h2 className="text-lg font-semibold">Player Contribution Chart</h2>
             <p className="text-sm text-slate-500">
               Total season contribution after captain and vice-captain multipliers
             </p>
+            {active ? (
+              <p className="mt-1 text-xs text-slate-500">
+                Active window {active.windowIndex}: card click highlights captain by default.
+              </p>
+            ) : null}
           </div>
-          {selectedPlayer ? (
+          {selectedPlayers.length > 0 ? (
             <button
               type="button"
-              onClick={() => setSelectedPlayer(null)}
+              onClick={() => {
+                setSelectedPlayers([]);
+                setSelectedRolesByPlayer({});
+              }}
               className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700"
             >
-              Highlight: {selectedPlayer} (Clear)
+              Highlight: {selectedPlayers.join(" + ")} (Clear)
             </button>
           ) : null}
         </div>
@@ -146,10 +205,20 @@ export function TeamLeadershipBreakdown({
               label: player.playerName,
               value: player.pointsAfterMultiplier,
             }))}
-            highlightedLabel={selectedPlayer}
-            onSelectLabel={(label) =>
-              setSelectedPlayer((current) => (current === label ? null : label))
-            }
+            highlightedLabels={selectedPlayers}
+            highlightRoles={selectedRolesByPlayer}
+            onSelectLabel={(label) => {
+              setSelectedPlayers((current) => {
+                if (current.includes(label)) {
+                  return current.filter((item) => item !== label);
+                }
+                return [...current, label];
+              });
+              setSelectedRolesByPlayer((current) => ({
+                ...current,
+                [label]: current[label] ?? "captain",
+              }));
+            }}
           />
         </div>
       </section>

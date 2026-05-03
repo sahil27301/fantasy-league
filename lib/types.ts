@@ -117,6 +117,21 @@ export interface TeamMatchProgression {
     captainBonus: number;
     viceCaptainBonus: number;
   }[];
+  theoreticalCaptaincy: {
+    totalPotentialPoints: number;
+    unrealizedPoints: number;
+    windows: {
+      windowIndex: 1 | 2 | 3;
+      actualCaptainBonus: number;
+      actualViceCaptainBonus: number;
+      theoreticalCaptainBonus: number;
+      theoreticalViceCaptainBonus: number;
+      actualCaptainPlayerId: number | null;
+      actualViceCaptainPlayerId: number | null;
+      theoreticalCaptainPlayerId: number | null;
+      theoreticalViceCaptainPlayerId: number | null;
+    }[];
+  };
 }
 
 export interface MatchProgressionResult {

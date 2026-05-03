@@ -50,6 +50,27 @@ export default async function TeamPage({
       captainBonus: windowBonusByIndex.get(window.windowIndex)?.captainBonus ?? 0,
       viceCaptainBonus: windowBonusByIndex.get(window.windowIndex)?.viceCaptainBonus ?? 0,
     }));
+  const theoreticalWindows = progressionTeam.theoreticalCaptaincy.windows
+    .filter((window) => window.windowIndex <= 2)
+    .sort((a, b) => a.windowIndex - b.windowIndex)
+    .map((window) => ({
+      ...window,
+      actualCaptainName: window.actualCaptainPlayerId
+        ? (nameByPlayerId.get(window.actualCaptainPlayerId) ?? `Player ${window.actualCaptainPlayerId}`)
+        : "N/A",
+      actualViceCaptainName: window.actualViceCaptainPlayerId
+        ? (nameByPlayerId.get(window.actualViceCaptainPlayerId) ??
+          `Player ${window.actualViceCaptainPlayerId}`)
+        : "N/A",
+      theoreticalCaptainName: window.theoreticalCaptainPlayerId
+        ? (nameByPlayerId.get(window.theoreticalCaptainPlayerId) ??
+          `Player ${window.theoreticalCaptainPlayerId}`)
+        : "N/A",
+      theoreticalViceCaptainName: window.theoreticalViceCaptainPlayerId
+        ? (nameByPlayerId.get(window.theoreticalViceCaptainPlayerId) ??
+          `Player ${window.theoreticalViceCaptainPlayerId}`)
+        : "N/A",
+    }));
 
   return (
     <main className="flex flex-col gap-5 pb-10">
@@ -78,6 +99,60 @@ export default async function TeamPage({
           </div>
         </div>
       </div>
+
+      <section className="glass-card rounded-3xl p-5">
+        <p className="muted-label">Theoretical Max So Far</p>
+        <h2 className="mt-2 text-lg font-semibold text-slate-900">
+          Captaincy optimization (W1 + W2)
+        </h2>
+        <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
+          <div className="rounded-2xl bg-white/75 p-3">
+            <p className="text-slate-500">Actual Total</p>
+            <p className="text-lg font-semibold">{formatPoints(team.totalPoints)}</p>
+          </div>
+          <div className="rounded-2xl bg-white/75 p-3">
+            <p className="text-slate-500">Theoretical Max</p>
+            <p className="text-lg font-semibold">
+              {formatPoints(progressionTeam.theoreticalCaptaincy.totalPotentialPoints)}
+            </p>
+          </div>
+          <div className="col-span-2 rounded-2xl bg-indigo-50 p-3 ring-1 ring-indigo-100">
+            <p className="text-slate-500">Unrealized Captaincy Points</p>
+            <p className="text-lg font-semibold text-indigo-700">
+              +{formatPoints(progressionTeam.theoreticalCaptaincy.unrealizedPoints)}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-4 space-y-3">
+          {theoreticalWindows.map((window) => (
+            <div
+              key={window.windowIndex}
+              className="rounded-2xl bg-white/80 p-4 ring-1 ring-slate-200/70"
+            >
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Window {window.windowIndex}
+              </p>
+              <p className="mt-1 text-sm text-slate-600">
+                Actual: C {window.actualCaptainName} / VC {window.actualViceCaptainName}
+              </p>
+              <p className="text-sm text-slate-600">
+                Optimal: C {window.theoreticalCaptainName} / VC{" "}
+                {window.theoreticalViceCaptainName}
+              </p>
+              <p className="mt-2 text-sm font-medium text-slate-800">
+                Delta:{" "}
+                {formatPoints(
+                  window.theoreticalCaptainBonus +
+                    window.theoreticalViceCaptainBonus -
+                    window.actualCaptainBonus -
+                    window.actualViceCaptainBonus,
+                )}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <TeamLeadershipBreakdown
         contributors={team.contributors}

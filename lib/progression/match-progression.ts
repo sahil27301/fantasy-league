@@ -52,7 +52,11 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
   const now = Date.now();
   const cached = globalProgressionCache.__matchProgressionCache;
   const cacheShapeValid =
-    cached?.value?.teams?.every((team) => Array.isArray((team as TeamMatchProgression).windowBonuses)) ??
+    cached?.value?.teams?.every(
+      (team) =>
+        Array.isArray((team as TeamMatchProgression).windowBonuses) &&
+        Array.isArray((team as TeamMatchProgression).theoreticalCaptaincy?.windows),
+    ) ??
     false;
   if (!forceRefresh && cached && cacheShapeValid && now - cached.generatedAt < CACHE_TTL_MS) {
     console.info("[match-progression] Returning cached progression", {
@@ -122,6 +126,13 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
   >();
   const bonusByTeam = new Map<string, { captainBonus: number; viceCaptainBonus: number }>();
   const transferImpactByTeam = new Map<string, number>();
+  const playerWindowPointsByTeam = new Map<
+    string,
+    Map<
+      1 | 2 | 3,
+      Map<number, { playerId: number; playerName: string; basePoints: number }>
+    >
+  >();
   const captainWindow1ByTeam = new Map<
     string,
     { captainPlayerId: number; viceCaptainPlayerId: number } | null
@@ -136,6 +147,14 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
     contributorByTeam.set(team.id, new Map());
     bonusByTeam.set(team.id, { captainBonus: 0, viceCaptainBonus: 0 });
     transferImpactByTeam.set(team.id, 0);
+    playerWindowPointsByTeam.set(
+      team.id,
+      new Map([
+        [1, new Map()],
+        [2, new Map()],
+        [3, new Map()],
+      ]),
+    );
     const window1Leadership = captainWindows.find(
       (window) => window.leagueTeamId === team.id && window.windowIndex === 1,
     );
@@ -182,11 +201,22 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
           window.windowIndex === activeWindow,
       );
       const baselineWindow1Leadership = captainWindow1ByTeam.get(team.id);
+      const windowPlayerPoints =
+        playerWindowPointsByTeam.get(team.id)?.get(activeWindow) ?? new Map();
 
       let matchPoints = 0;
       let leadershipBonusThisMatch = 0;
       for (const player of teamRoster) {
         const basePoints = pointsLookup.get(player.resolvedPlayerId)?.get(matchNumber) ?? 0;
+        const windowPlayerEntry = windowPlayerPoints.get(player.resolvedPlayerId) ?? {
+          playerId: player.resolvedPlayerId,
+          playerName: player.playerNameNormalized,
+          basePoints: 0,
+        };
+        windowPlayerEntry.basePoints = Number(
+          (windowPlayerEntry.basePoints + basePoints).toFixed(2),
+        );
+        windowPlayerPoints.set(player.resolvedPlayerId, windowPlayerEntry);
         let multiplier = 1;
         let role: "captain" | "viceCaptain" | "normal" = "normal";
         if (capWindow?.captainPlayerId === player.resolvedPlayerId) {
@@ -233,6 +263,7 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
         }
         teamContributors.set(player.resolvedPlayerId, existing);
       }
+      playerWindowPointsByTeam.get(team.id)?.set(activeWindow, windowPlayerPoints);
 
       if (matchNumber >= 36 && matchNumber <= 70) {
         let baselineWindow1Bonus = 0;
@@ -306,6 +337,72 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
       .sort((a, b) => b.pointsAfterMultiplier - a.pointsAfterMultiplier);
 
     const bonus = bonusByTeam.get(team.id)!;
+    const teamWindowBonuses = [...windowBonusByTeam.get(team.id)!.entries()].map(
+      ([windowIndex, values]) => ({
+        windowIndex,
+        captainBonus: values.captainBonus,
+        viceCaptainBonus: values.viceCaptainBonus,
+      }),
+    );
+    const theoreticalWindows = (
+      [1, 2, 3] as const
+    ).map((windowIndex) => {
+      const actualWindow = captainWindows.find(
+        (window) =>
+          window.leagueTeamId === team.id && window.windowIndex === windowIndex,
+      );
+      const playersInWindow = [
+        ...(playerWindowPointsByTeam.get(team.id)?.get(windowIndex)?.values() ?? []),
+      ].sort((a, b) => b.basePoints - a.basePoints);
+      const top = playersInWindow[0];
+      const second = playersInWindow[1];
+      return {
+        windowIndex,
+        actualCaptainBonus:
+          teamWindowBonuses.find((window) => window.windowIndex === windowIndex)
+            ?.captainBonus ?? 0,
+        actualViceCaptainBonus:
+          teamWindowBonuses.find((window) => window.windowIndex === windowIndex)
+            ?.viceCaptainBonus ?? 0,
+        theoreticalCaptainBonus: Number((top?.basePoints ?? 0).toFixed(2)),
+        theoreticalViceCaptainBonus: Number(
+          (((second?.basePoints ?? 0) * 0.5).toFixed(2)),
+        ),
+        actualCaptainPlayerId: actualWindow?.captainPlayerId ?? null,
+        actualViceCaptainPlayerId: actualWindow?.viceCaptainPlayerId ?? null,
+        theoreticalCaptainPlayerId: top?.playerId ?? null,
+        theoreticalViceCaptainPlayerId: second?.playerId ?? null,
+      };
+    });
+    const actualTotalBonus = Number(
+      theoreticalWindows
+        .reduce(
+          (acc, window) =>
+            acc + window.actualCaptainBonus + window.actualViceCaptainBonus,
+          0,
+        )
+        .toFixed(2),
+    );
+    const theoreticalTotalBonus = Number(
+      theoreticalWindows
+        .reduce(
+          (acc, window) =>
+            acc +
+            window.theoreticalCaptainBonus +
+            window.theoreticalViceCaptainBonus,
+          0,
+        )
+        .toFixed(2),
+    );
+    const latestCumulativePoints =
+      progressionByTeam.get(team.id)?.at(-1)?.cumulativePoints ?? 0;
+    const theoreticalTotalPotentialPoints = Number(
+      (latestCumulativePoints - actualTotalBonus + theoreticalTotalBonus).toFixed(2),
+    );
+    const unrealizedPoints = Number(
+      Math.max(theoreticalTotalPotentialPoints - latestCumulativePoints, 0).toFixed(2),
+    );
+
     return {
       leagueTeamId: team.id,
       ownerName: team.ownerName,
@@ -315,13 +412,12 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
       captainBonus: bonus.captainBonus,
       viceCaptainBonus: bonus.viceCaptainBonus,
       transferImpactScore: Number((transferImpactByTeam.get(team.id) ?? 0).toFixed(2)),
-      windowBonuses: [...windowBonusByTeam.get(team.id)!.entries()].map(
-        ([windowIndex, values]) => ({
-          windowIndex,
-          captainBonus: values.captainBonus,
-          viceCaptainBonus: values.viceCaptainBonus,
-        }),
-      ),
+      windowBonuses: teamWindowBonuses,
+      theoreticalCaptaincy: {
+        totalPotentialPoints: theoreticalTotalPotentialPoints,
+        unrealizedPoints,
+        windows: theoreticalWindows,
+      },
     };
   });
 
@@ -342,6 +438,10 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
     nonZeroLeadershipImpactTeams: teamSeries.filter(
       (team) => Math.abs(team.transferImpactScore) > 0.01,
     ).length,
+    maxUnrealizedCaptaincyPoints: Math.max(
+      ...teamSeries.map((team) => team.theoreticalCaptaincy.unrealizedPoints),
+      0,
+    ),
   });
 
   return result;
