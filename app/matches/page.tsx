@@ -7,6 +7,17 @@ import { formatDateTimeIST } from "@/lib/utils/format";
 
 export const dynamic = "force-dynamic";
 
+function formatMatchupLabel(teamCodes?: string[]) {
+  const normalized = (teamCodes ?? []).filter(Boolean);
+  if (normalized.length === 0) {
+    return "Teams unavailable";
+  }
+  if (normalized.length === 1) {
+    return normalized[0];
+  }
+  return `${normalized[0]} vs ${normalized[1]}`;
+}
+
 export default async function MatchesPage() {
   const [result, upcomingPreview] = await Promise.all([
     getMatchAnalysisComputation(false),
@@ -62,9 +73,14 @@ export default async function MatchesPage() {
               href={`/matches/${matchNumber}`}
               className="rounded-2xl border border-slate-200 bg-white/80 p-4 transition hover:-translate-y-0.5 hover:bg-slate-50"
             >
-              <h3 className="text-base font-semibold text-slate-900">
-                Match {matchNumber}
-              </h3>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="text-base font-semibold text-slate-900">
+                  Match {matchNumber}
+                </h3>
+                <span className="rounded-full bg-indigo-100 px-2.5 py-1 text-xs font-semibold text-indigo-700">
+                  {formatMatchupLabel(result.analysesByMatch[matchNumber]?.playingIplTeams)}
+                </span>
+              </div>
               <p className="mt-1 text-sm text-slate-600">
                 Open detailed player and fantasy team stats
               </p>
