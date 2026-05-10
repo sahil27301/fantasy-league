@@ -139,3 +139,70 @@ export interface MatchProgressionResult {
   matches: number[];
   teams: TeamMatchProgression[];
 }
+
+export interface MatchUpcomingInfo {
+  matchNumber: number | null;
+  matchName: string;
+  matchDateIso: string | null;
+  homeTeamShortName?: string | null;
+  awayTeamShortName?: string | null;
+}
+
+export interface MatchTeamPerformance {
+  leagueTeamId: string;
+  displayName: string;
+  ownerName: string;
+  totalPoints: number;
+  basePoints: number;
+  captainBonus: number;
+  viceCaptainBonus: number;
+  captainPlayerId: number | null;
+  viceCaptainPlayerId: number | null;
+}
+
+export interface MatchPlayerPerformance {
+  playerId: number;
+  playerName: string;
+  teamShortName: string;
+  points: number;
+  fantasyTeams: string[];
+  captainedBy: string[];
+  viceCaptainedBy: string[];
+}
+
+export interface MatchFantasyTeamPlayerRow {
+  playerId: number;
+  playerName: string;
+  iplTeamShortName: string;
+  fantasyTeamName: string;
+  points: number | null;
+  isCaptain: boolean;
+  isViceCaptain: boolean;
+}
+
+export interface MatchFantasyTeamBreakdown {
+  leagueTeamId: string;
+  displayName: string;
+  ownerName: string;
+  totalPoints: number | null;
+  basePoints: number | null;
+  captainBonus: number | null;
+  viceCaptainBonus: number | null;
+  players: MatchFantasyTeamPlayerRow[];
+}
+
+export interface MatchAnalysis {
+  matchNumber: number;
+  activeWindow: 1 | 2 | 3;
+  playingIplTeams: string[];
+  teamPerformances: MatchTeamPerformance[];
+  playerPerformances: MatchPlayerPerformance[];
+  fantasyTeamBreakdowns: MatchFantasyTeamBreakdown[];
+}
+
+export interface MatchAnalysisComputationResult {
+  generatedAt: string;
+  completedMatches: number[];
+  upcomingMatches: MatchUpcomingInfo[];
+  analysesByMatch: Record<number, MatchAnalysis>;
+}
