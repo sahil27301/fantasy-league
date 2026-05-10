@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { HorizontalBars } from "@/components/charts/horizontal-bars";
-import { formatPoints } from "@/lib/utils/format";
+import { formatDateTimeIST, formatPoints } from "@/lib/utils/format";
 import type { MatchAnalysis, MatchUpcomingInfo } from "@/lib/types";
 
 interface MatchListResponse {
@@ -202,7 +202,9 @@ export function MatchAnalysisDashboard() {
                   className="rounded-full bg-white/80 px-3 py-1 text-xs text-slate-700 ring-1 ring-slate-200"
                 >
                   {match.matchName}
-                  {match.matchDateIso ? ` • ${match.matchDateIso}` : ""}
+                  {match.matchDateIso
+                    ? ` • ${formatDateTimeIST(match.matchDateIso)}`
+                    : ""}
                 </span>
               ))}
             </div>

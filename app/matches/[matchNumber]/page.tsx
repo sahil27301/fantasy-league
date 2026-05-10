@@ -4,7 +4,7 @@ import {
   getMatchAnalysisComputation,
   getUpcomingMatchPreview,
 } from "@/lib/matches/match-analysis";
-import { formatPoints } from "@/lib/utils/format";
+import { formatDateTimeIST, formatPoints } from "@/lib/utils/format";
 
 export const dynamic = "force-dynamic";
 
@@ -64,7 +64,7 @@ export default async function MatchDetailPage({
           </div>
           <p className="mt-2 text-sm text-slate-600">
             {upcomingPreview.upcoming.matchDateIso
-              ? `Starts: ${upcomingPreview.upcoming.matchDateIso}`
+              ? `Starts: ${formatDateTimeIST(upcomingPreview.upcoming.matchDateIso)}`
               : "Schedule time not available"}
           </p>
           <p className="mt-2 text-xs text-slate-500">

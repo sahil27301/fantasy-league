@@ -3,7 +3,7 @@ import { getLeagueComputation } from "@/lib/data/score-service";
 import { getMatchProgression } from "@/lib/progression/match-progression";
 import { RefreshButton } from "@/components/refresh-button";
 import { ExitAdminButton } from "@/components/exit-admin-button";
-import { formatDelta, formatPoints } from "@/lib/utils/format";
+import { formatDateTimeIST, formatDelta, formatPoints } from "@/lib/utils/format";
 import { HorizontalBars } from "@/components/charts/horizontal-bars";
 import { isAdminSession } from "@/lib/auth/admin";
 import type { TeamStanding } from "@/lib/types";
@@ -126,7 +126,7 @@ export default async function Home({
         </p>
         <h1 className="section-title mt-2 text-slate-900">Live Leaderboard</h1>
         <p className="mt-2 text-sm text-slate-600">
-          Updated {new Date(result.generatedAt).toLocaleString("en-IN")}
+          Updated {formatDateTimeIST(result.generatedAt)}
         </p>
         <div className="mt-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
