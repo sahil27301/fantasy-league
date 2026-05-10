@@ -41,9 +41,9 @@ export function HorizontalBars({
     );
     return {
       grid: {
-        left: 8,
-        right: 64,
-        top: 8,
+        left: 4,
+        right: 58,
+        top: 6,
         bottom: 0,
         containLabel: true,
       },
@@ -58,17 +58,17 @@ export function HorizontalBars({
         axisTick: { show: false },
         axisLine: { show: false },
         axisLabel: {
-          width: 150,
+          width: 120,
           overflow: "truncate",
           color: "#334155",
-          fontSize: 12,
+          fontSize: 11,
           fontWeight: 600,
         },
       },
       tooltip: {
         trigger: "axis",
         axisPointer: { type: "shadow" },
-        backgroundColor: "rgba(15, 23, 42, 0.92)",
+        backgroundColor: "rgba(30, 41, 82, 0.94)",
         borderWidth: 0,
         textStyle: {
           color: "#f8fafc",
@@ -133,8 +133,8 @@ export function HorizontalBars({
                 x2: 1,
                 y2: 0,
                 colorStops: [
-                  { offset: 0, color: "#4f46e5" },
-                  { offset: 1, color: "#0ea5e9" },
+                  { offset: 0, color: "#4338ca" },
+                  { offset: 1, color: "#0284c7" },
                 ],
               };
             },
@@ -145,6 +145,7 @@ export function HorizontalBars({
             distance: 10,
             color: "#0f172a",
             fontWeight: 700,
+            fontSize: 11,
             formatter: (params: any) =>
               formatChartValue(Number(params.value)),
           },
@@ -156,7 +157,7 @@ export function HorizontalBars({
   return (
     <ReactECharts
       option={option}
-      style={{ height: Math.max(280, data.length * 44) }}
+      style={{ height: Math.max(240, data.length * 40) }}
       onEvents={
         onSelectLabel
           ? {

@@ -83,7 +83,7 @@ export function TeamLeadershipBreakdown({
 
   return (
     <>
-      <section className="glass-card rounded-3xl p-5">
+      <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <h2 className="text-lg font-semibold">Leadership Windows</h2>
@@ -111,7 +111,7 @@ export function TeamLeadershipBreakdown({
                 className={`rounded-2xl border p-4 text-left transition ${
                   activeWindow === window.windowIndex
                     ? "border-indigo-300 bg-indigo-50/80"
-                    : "border-slate-200 bg-white/75 hover:bg-slate-50"
+                    : "border-slate-200 bg-white/75 hover:bg-white"
                 }`}
               >
                 <p className="text-xs font-semibold uppercase text-slate-500">
@@ -173,7 +173,7 @@ export function TeamLeadershipBreakdown({
         ) : null}
       </section>
 
-      <section ref={chartSectionRef} className="glass-card rounded-3xl p-5">
+      <section ref={chartSectionRef} className="glass-card rounded-[1.6rem] p-4 md:p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <h2 className="text-lg font-semibold">Player Contribution Chart</h2>
@@ -193,7 +193,7 @@ export function TeamLeadershipBreakdown({
                 setSelectedPlayers([]);
                 setSelectedRolesByPlayer({});
               }}
-              className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700"
+              className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200"
             >
               Highlight: {selectedPlayers.join(" + ")} (Clear)
             </button>

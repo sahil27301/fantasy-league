@@ -63,8 +63,8 @@ export function PlayersDirectory({ rows }: { rows: PlayerDirectoryRow[] }) {
   }, [query, selectedIplTeam, selectedFantasyTeam, pointsMode, filteredRows.length]);
 
   return (
-    <section className="glass-card rounded-3xl p-5">
-      <div className="flex flex-wrap items-end gap-2">
+    <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
+      <div className="flex flex-wrap items-end gap-2.5">
         <div className="min-w-[200px] flex-1">
           <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">
             Search
@@ -115,12 +115,12 @@ export function PlayersDirectory({ rows }: { rows: PlayerDirectoryRow[] }) {
           <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">
             Points Mode
           </label>
-          <div className="mt-1 inline-flex rounded-full bg-slate-100 p-1">
+          <div className="mt-1 inline-flex rounded-full bg-white/85 p-1 ring-1 ring-indigo-100">
             <button
               type="button"
               onClick={() => setPointsMode("base")}
-              className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
-                pointsMode === "base" ? "bg-slate-900 text-white" : "text-slate-700"
+              className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                pointsMode === "base" ? "bg-indigo-600 text-white" : "text-slate-700"
               }`}
             >
               Base
@@ -128,8 +128,8 @@ export function PlayersDirectory({ rows }: { rows: PlayerDirectoryRow[] }) {
             <button
               type="button"
               onClick={() => setPointsMode("boosted")}
-              className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
-                pointsMode === "boosted" ? "bg-slate-900 text-white" : "text-slate-700"
+              className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                pointsMode === "boosted" ? "bg-indigo-600 text-white" : "text-slate-700"
               }`}
             >
               With C/VC

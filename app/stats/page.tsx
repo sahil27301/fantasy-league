@@ -9,8 +9,8 @@ export default async function StatsPage() {
   const result = await getLeagueComputation(false);
 
   return (
-    <main className="flex flex-col gap-5 pb-10">
-      <header className="glass-card-strong rounded-3xl p-6">
+    <main className="flex flex-col gap-4 pb-10 md:gap-5">
+      <header className="glass-card-strong rounded-[1.75rem] p-5 md:p-6">
         <p className="muted-label">League Insights</p>
         <h1 className="section-title mt-2">Stats Dashboard</h1>
         <p className="mt-2 text-sm text-slate-600">
@@ -22,7 +22,7 @@ export default async function StatsPage() {
         </p>
       </header>
 
-      <section className="glass-card rounded-3xl p-5">
+      <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
         <h2 className="text-lg font-semibold">Captain ROI Ranking</h2>
         <p className="text-sm text-slate-500">
           Extra points earned from C/VC multipliers
@@ -56,7 +56,7 @@ export default async function StatsPage() {
           <Link
             key={team.leagueTeamId}
             href={`/team/${team.leagueTeamId}`}
-            className="glass-card block rounded-3xl p-5 transition hover:-translate-y-0.5"
+            className="glass-card block rounded-[1.6rem] p-4 transition hover:-translate-y-0.5 md:p-5"
           >
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold">{team.displayName}</h2>
@@ -65,26 +65,26 @@ export default async function StatsPage() {
               </span>
             </div>
 
-            <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
-              <div className="rounded-2xl bg-white/70 p-3">
+            <div className="mt-3 grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
+              <div className="metric-tile">
                 <p className="text-slate-500">Momentum</p>
                 <p className="font-semibold">
                   {formatDelta(insight.statsV1.rankMomentum)}
                 </p>
               </div>
-              <div className="rounded-2xl bg-white/70 p-3">
+              <div className="metric-tile">
                 <p className="text-slate-500">Gap to Leader</p>
                 <p className="font-semibold">
                   {formatPoints(insight.statsV1.pointsBehindLeader)}
                 </p>
               </div>
-              <div className="rounded-2xl bg-white/70 p-3">
+              <div className="metric-tile">
                 <p className="text-slate-500">Top-3 Concentration</p>
                 <p className="font-semibold">
                   {formatPoints(insight.statsV1.topContributorConcentration)}%
                 </p>
               </div>
-              <div className="rounded-2xl bg-white/70 p-3">
+              <div className="metric-tile">
                 <p className="text-slate-500">Transfer Impact (W2 C/VC Net)</p>
                 <p className="font-semibold">
                   {formatPoints(insight.statsV2.transferImpactScore)}

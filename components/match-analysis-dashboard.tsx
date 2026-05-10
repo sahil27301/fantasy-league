@@ -129,7 +129,7 @@ export function MatchAnalysisDashboard() {
 
   if (isLoadingList) {
     return (
-      <section className="glass-card rounded-3xl p-5">
+      <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
         <p className="text-sm text-slate-500">Loading match analysis...</p>
       </section>
     );
@@ -165,7 +165,7 @@ export function MatchAnalysisDashboard() {
                 void loadMatchDetails(selectedMatch, true);
               }
             }}
-            className="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-800"
+            className="rounded-full bg-indigo-600 px-4 py-2 text-xs font-semibold text-white transition hover:bg-indigo-500"
           >
             Refresh Match Data
           </button>
@@ -175,7 +175,7 @@ export function MatchAnalysisDashboard() {
           <select
             value={selectedMatch ?? ""}
             onChange={(event) => setSelectedMatch(Number(event.target.value))}
-            className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800"
+            className="rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800"
           >
             {completedMatches.map((matchNumber) => (
               <option key={matchNumber} value={matchNumber}>
@@ -213,18 +213,18 @@ export function MatchAnalysisDashboard() {
       </section>
 
       {errorMessage ? (
-        <section className="glass-card rounded-3xl p-5">
+        <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
           <p className="text-sm text-rose-600">{errorMessage}</p>
         </section>
       ) : null}
 
       {isLoadingMatch || !matchAnalysis ? (
-        <section className="glass-card rounded-3xl p-5">
+        <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
           <p className="text-sm text-slate-500">Loading selected match...</p>
         </section>
       ) : (
         <>
-          <section className="glass-card rounded-3xl p-5">
+          <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
             <h2 className="text-lg font-semibold text-slate-900">
               Team Points for Match {matchAnalysis.matchNumber}
             </h2>
@@ -292,7 +292,7 @@ export function MatchAnalysisDashboard() {
             </div>
           </section>
 
-          <section className="glass-card rounded-3xl p-5">
+          <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
             <h2 className="text-lg font-semibold text-slate-900">
               Player-wise Performance (Match {matchAnalysis.matchNumber})
             </h2>

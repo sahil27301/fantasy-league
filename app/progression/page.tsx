@@ -8,8 +8,8 @@ export default async function ProgressionPage() {
   const progression = await getMatchProgression(false);
 
   return (
-    <main className="flex flex-col gap-5 pb-10">
-      <header className="glass-card-strong rounded-3xl p-6">
+    <main className="flex flex-col gap-4 pb-10 md:gap-5">
+      <header className="glass-card-strong rounded-[1.75rem] p-5 md:p-6">
         <p className="muted-label">Progression</p>
         <h1 className="section-title mt-2">Match-wise League Progression</h1>
         <p className="mt-2 text-sm text-slate-600">
@@ -19,14 +19,14 @@ export default async function ProgressionPage() {
       </header>
 
       {progression.matches.length === 0 ? (
-        <section className="glass-card rounded-3xl p-5">
+        <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
           <p className="text-sm text-zinc-500">No completed match data available yet.</p>
         </section>
       ) : (
         <ProgressionDashboard progression={progression} />
       )}
 
-      <Link href="/" className="text-sm font-semibold text-indigo-700">
+      <Link href="/" className="back-link">
         ← Back to leaderboard
       </Link>
     </main>

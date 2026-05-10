@@ -53,8 +53,8 @@ export default async function MatchDetailPage({
       (team) => team.players.length > 0,
     );
     return (
-      <main className="flex flex-col gap-5 pb-10">
-        <header className="glass-card-strong rounded-3xl p-6">
+      <main className="flex flex-col gap-4 pb-10 md:gap-5">
+        <header className="glass-card-strong rounded-[1.75rem] p-5 md:p-6">
           <p className="muted-label">Upcoming Match Preview</p>
           <h1 className="section-title mt-2">{upcomingPreview.upcoming.matchName}</h1>
           <div className="mt-2">
@@ -72,17 +72,14 @@ export default async function MatchDetailPage({
           </p>
         </header>
 
-        <section className="glass-card rounded-3xl p-5">
+        <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
           <h2 className="text-lg font-semibold text-slate-900">Fantasy Teams</h2>
           <p className="text-sm text-slate-500">
             Window {preview.activeWindow} roster with C/VC tags for this upcoming match.
           </p>
           <div className="mt-4 grid gap-3">
             {visiblePreviewTeamBreakdowns.map((team) => (
-              <div
-                key={team.leagueTeamId}
-                className="rounded-2xl bg-white/85 p-4 ring-1 ring-slate-200/70"
-              >
+              <div key={team.leagueTeamId} className="rounded-2xl bg-white/85 p-4 ring-1 ring-slate-200/70">
                 <h3 className="text-base font-semibold text-slate-900">
                   {team.displayName}
                 </h3>
@@ -130,7 +127,7 @@ export default async function MatchDetailPage({
           </div>
         </section>
 
-        <Link href="/matches" className="text-sm font-semibold text-indigo-700">
+        <Link href="/matches" className="back-link">
           ← Back to match cards
         </Link>
       </main>
@@ -152,8 +149,8 @@ export default async function MatchDetailPage({
     (team) => team.players.length > 0,
   );
   return (
-    <main className="flex flex-col gap-5 pb-10">
-      <header className="glass-card-strong rounded-3xl p-6">
+    <main className="flex flex-col gap-4 pb-10 md:gap-5">
+      <header className="glass-card-strong rounded-[1.75rem] p-5 md:p-6">
         <p className="muted-label">Completed Match</p>
         <h1 className="section-title mt-2">Match {analysis.matchNumber}</h1>
         <div className="mt-2">
@@ -166,7 +163,7 @@ export default async function MatchDetailPage({
         </p>
       </header>
 
-      <section className="glass-card rounded-3xl p-5">
+      <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
         <h2 className="text-lg font-semibold text-slate-900">Fantasy Teams</h2>
         <p className="text-sm text-slate-500">
           Team totals, C/VC bonus impact, and player rows for this match.
@@ -251,7 +248,7 @@ export default async function MatchDetailPage({
         </div>
       </section>
 
-      <section className="glass-card rounded-3xl p-5">
+      <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
         <h2 className="text-lg font-semibold text-slate-900">Cricket Players</h2>
         <p className="text-sm text-slate-500">
           Overall match performance with fantasy-team ownership context.
@@ -300,7 +297,7 @@ export default async function MatchDetailPage({
         </div>
       </section>
 
-      <Link href="/matches" className="text-sm font-semibold text-indigo-700">
+      <Link href="/matches" className="back-link">
         ← Back to match cards
       </Link>
     </main>

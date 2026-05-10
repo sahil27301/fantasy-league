@@ -50,8 +50,8 @@ export default async function PlayersPage() {
   });
 
   return (
-    <main className="flex flex-col gap-5 pb-10">
-      <header className="glass-card-strong rounded-3xl p-6">
+    <main className="flex flex-col gap-4 pb-10 md:gap-5">
+      <header className="glass-card-strong rounded-[1.75rem] p-5 md:p-6">
         <p className="muted-label">Players</p>
         <h1 className="section-title mt-2">Player List</h1>
         <p className="mt-2 text-sm text-slate-600">
@@ -62,7 +62,7 @@ export default async function PlayersPage() {
 
       <PlayersDirectory rows={rows} />
 
-      <Link href="/" className="text-sm font-semibold text-indigo-700">
+      <Link href="/" className="back-link">
         ← Back to leaderboard
       </Link>
     </main>

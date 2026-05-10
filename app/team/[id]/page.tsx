@@ -73,25 +73,25 @@ export default async function TeamPage({
     }));
 
   return (
-    <main className="flex flex-col gap-5 pb-10">
-      <div className="glass-card-strong rounded-3xl p-5">
+    <main className="flex flex-col gap-4 pb-10 md:gap-5">
+      <div className="glass-card-strong rounded-[1.75rem] p-5">
         <p className="muted-label">Team Overview</p>
         <h1 className="section-title mt-2">{team.displayName}</h1>
         <p className="text-sm text-slate-500">Owner: {team.ownerName}</p>
         <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
-          <div className="rounded-2xl bg-white/75 p-3">
+          <div className="metric-tile">
             <p className="text-slate-500">Total</p>
             <p className="text-lg font-semibold">{formatPoints(team.totalPoints)}</p>
           </div>
-          <div className="rounded-2xl bg-white/75 p-3">
+          <div className="metric-tile">
             <p className="text-slate-500">Rank</p>
             <p className="text-lg font-semibold">#{team.rank}</p>
           </div>
-          <div className="rounded-2xl bg-white/75 p-3">
+          <div className="metric-tile">
             <p className="text-slate-500">Captain ROI</p>
             <p className="text-lg font-semibold">{formatPoints(insight.statsV1.captainRoi)}</p>
           </div>
-          <div className="rounded-2xl bg-white/75 p-3">
+          <div className="metric-tile">
             <p className="text-slate-500">Consistency</p>
             <p className="text-lg font-semibold">
               {formatPoints(insight.statsV1.consistencyIndex)}
@@ -100,17 +100,17 @@ export default async function TeamPage({
         </div>
       </div>
 
-      <section className="glass-card rounded-3xl p-5">
+      <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
         <p className="muted-label">Theoretical Max So Far</p>
         <h2 className="mt-2 text-lg font-semibold text-slate-900">
           Captaincy optimization (W1 + W2)
         </h2>
         <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
-          <div className="rounded-2xl bg-white/75 p-3">
+          <div className="metric-tile">
             <p className="text-slate-500">Actual Total</p>
             <p className="text-lg font-semibold">{formatPoints(team.totalPoints)}</p>
           </div>
-          <div className="rounded-2xl bg-white/75 p-3">
+          <div className="metric-tile">
             <p className="text-slate-500">Theoretical Max</p>
             <p className="text-lg font-semibold">
               {formatPoints(progressionTeam.theoreticalCaptaincy.totalPotentialPoints)}
@@ -159,7 +159,7 @@ export default async function TeamPage({
         leadershipWindows={leadershipWindows}
       />
 
-      <Link href="/" className="text-sm font-semibold text-indigo-700">
+      <Link href="/" className="back-link">
         ← Back to leaderboard
       </Link>
     </main>

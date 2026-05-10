@@ -119,8 +119,8 @@ export default async function Home({
   });
 
   return (
-    <main className="flex flex-col gap-5 pb-10">
-      <section className="glass-card-strong rounded-3xl p-6">
+    <main className="flex flex-col gap-4 pb-10 md:gap-5">
+      <section className="glass-card-strong rounded-[1.75rem] p-5 md:p-6">
         <p className="muted-label">
           IPL Fantasy League
         </p>
@@ -128,21 +128,21 @@ export default async function Home({
         <p className="mt-2 text-sm text-slate-600">
           Updated {formatDateTimeIST(result.generatedAt)}
         </p>
-        <div className="mt-4">
+        <div className="mt-5">
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
             Leaderboard Mode
           </p>
-          <div className="mt-2 inline-flex rounded-full bg-slate-100 p-1">
+          <div className="mt-2 inline-flex rounded-full bg-white/80 p-1 ring-1 ring-indigo-100">
             {(Object.keys(MODE_CONFIG) as LeaderboardMode[]).map((entryMode) => {
               const href = entryMode === "actual" ? "/" : `/?mode=${entryMode}`;
               return (
                 <Link
                   key={entryMode}
                   href={href}
-                  className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
                     mode === entryMode
-                      ? "bg-slate-900 text-white"
-                      : "text-slate-700 hover:bg-slate-200"
+                      ? "bg-indigo-600 text-white"
+                      : "text-slate-700 hover:bg-white"
                   }`}
                 >
                   {MODE_CONFIG[entryMode].label}
@@ -158,7 +158,7 @@ export default async function Home({
         </div>
       </section>
 
-      <section className="glass-card rounded-3xl p-5">
+      <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
         <h2 className="text-lg font-semibold text-slate-900">Points Comparison</h2>
         <p className="text-sm text-slate-500">{MODE_CONFIG[mode].pointsLabel} by team</p>
         <div className="mt-4">
@@ -198,7 +198,7 @@ export default async function Home({
             <Link
               href={`/team/${team.leagueTeamId}`}
               key={team.leagueTeamId}
-              className={`${rankCardStyle} rounded-3xl border p-5 shadow-sm transition hover:-translate-y-0.5`}
+              className={`${rankCardStyle} rounded-[1.6rem] border p-4 shadow-sm transition hover:-translate-y-0.5 md:p-5`}
             >
               <div className="flex items-center justify-between">
                 <div>
@@ -224,7 +224,7 @@ export default async function Home({
                 </span>
               </div>
 
-              <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
+              <div className="mt-3 grid grid-cols-1 gap-2 text-xs sm:grid-cols-3">
                 <div className={metricCellStyle}>
                   <p className="text-slate-500">Momentum</p>
                   <p className="font-semibold">

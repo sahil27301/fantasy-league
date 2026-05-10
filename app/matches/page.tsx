@@ -26,8 +26,8 @@ export default async function MatchesPage() {
   const completedMatchesDesc = [...result.completedMatches].sort((a, b) => b - a);
 
   return (
-    <main className="flex flex-col gap-5 pb-10">
-      <header className="glass-card-strong rounded-3xl p-6">
+    <main className="flex flex-col gap-4 pb-10 md:gap-5">
+      <header className="glass-card-strong rounded-[1.75rem] p-5 md:p-6">
         <p className="muted-label">Match Analysis</p>
         <h1 className="section-title mt-2">Match Cards</h1>
         <p className="mt-2 text-sm text-slate-600">
@@ -36,7 +36,7 @@ export default async function MatchesPage() {
       </header>
 
       {upcomingPreview ? (
-        <section className="glass-card rounded-3xl p-5">
+        <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
             Upcoming Match
           </p>
@@ -59,7 +59,7 @@ export default async function MatchesPage() {
         </section>
       ) : null}
 
-      <section className="glass-card rounded-3xl p-5">
+      <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold text-slate-900">Completed Matches</h2>
           <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
@@ -89,7 +89,7 @@ export default async function MatchesPage() {
         </div>
       </section>
 
-      <Link href="/" className="text-sm font-semibold text-indigo-700">
+      <Link href="/" className="back-link">
         ← Back to leaderboard
       </Link>
     </main>

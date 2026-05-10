@@ -117,8 +117,8 @@ export function ProgressionDashboard({ progression }: { progression: MatchProgre
   }, [playerA, playerB, progression.matches]);
 
   return (
-    <div className="space-y-5">
-      <section className="glass-card rounded-3xl p-5">
+    <div className="space-y-4 md:space-y-5">
+      <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold text-slate-900">Cumulative Points by Match</h2>
@@ -126,12 +126,12 @@ export function ProgressionDashboard({ progression }: { progression: MatchProgre
               {viewMode === "top3" ? "Top 3 teams" : "All teams"} across all completed matches
             </p>
           </div>
-          <div className="inline-flex rounded-full bg-slate-100 p-1">
+          <div className="inline-flex rounded-full bg-white/85 p-1 ring-1 ring-indigo-100">
             <button
               type="button"
               onClick={() => setViewMode("top3")}
-              className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                viewMode === "top3" ? "bg-slate-900 text-white" : "text-slate-700"
+              className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
+                viewMode === "top3" ? "bg-indigo-600 text-white" : "text-slate-700"
               }`}
             >
               Top 3
@@ -139,8 +139,8 @@ export function ProgressionDashboard({ progression }: { progression: MatchProgre
             <button
               type="button"
               onClick={() => setViewMode("all")}
-              className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                viewMode === "all" ? "bg-slate-900 text-white" : "text-slate-700"
+              className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
+                viewMode === "all" ? "bg-indigo-600 text-white" : "text-slate-700"
               }`}
             >
               All Teams
@@ -152,7 +152,7 @@ export function ProgressionDashboard({ progression }: { progression: MatchProgre
         </div>
       </section>
 
-      <section className="glass-card rounded-3xl p-5">
+      <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
         <h2 className="text-lg font-semibold text-slate-900">Rank Movement by Match</h2>
         <p className="text-sm text-slate-500">Lower line means better rank</p>
         <div className="mt-3 rounded-2xl bg-white/80 p-3">
@@ -166,7 +166,7 @@ export function ProgressionDashboard({ progression }: { progression: MatchProgre
         </div>
       </section>
 
-      <section className="glass-card rounded-3xl p-5">
+      <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
         <h2 className="text-lg font-semibold text-slate-900">Head-to-Head Comparison</h2>
         <p className="text-sm text-slate-500">
           Compare progression, C/VC impact and top scorers for any two teams
@@ -176,7 +176,7 @@ export function ProgressionDashboard({ progression }: { progression: MatchProgre
           <select
             value={playerAId}
             onChange={(event) => setPlayerAId(event.target.value)}
-            className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800"
+            className="rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800"
           >
             {sortedTeams.map((team) => (
               <option key={team.leagueTeamId} value={team.leagueTeamId}>
@@ -187,7 +187,7 @@ export function ProgressionDashboard({ progression }: { progression: MatchProgre
           <select
             value={playerBId}
             onChange={(event) => setPlayerBId(event.target.value)}
-            className="rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800"
+            className="rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800"
           >
             {sortedTeams.map((team) => (
               <option key={team.leagueTeamId} value={team.leagueTeamId}>
