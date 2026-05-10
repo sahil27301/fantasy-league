@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getLeagueComputation } from "@/lib/data/score-service";
 import { getCaptainWindows } from "@/lib/data/seed";
+import { fetchLivePlayers } from "@/lib/ipl/client";
 import {
   PlayersDirectory,
   type PlayerDirectoryRow,
@@ -10,10 +11,13 @@ export const dynamic = "force-dynamic";
 
 export default async function PlayersPage() {
   console.info("[players-page] Building player directory page");
-  const result = await getLeagueComputation(false);
+  const [result, livePlayers] = await Promise.all([
+    getLeagueComputation(false),
+    fetchLivePlayers(),
+  ]);
   const captainWindows = getCaptainWindows();
 
-  const rows: PlayerDirectoryRow[] = result.snapshot.standings.flatMap((team) =>
+  const ownedRows: PlayerDirectoryRow[] = result.snapshot.standings.flatMap((team) =>
     team.contributors.map((player) => ({
       fantasyTeamId: team.leagueTeamId,
       fantasyTeamName: team.displayName,
@@ -43,10 +47,28 @@ export default async function PlayersPage() {
         .sort((a, b) => a - b),
     })),
   );
+  const ownedPlayerIds = new Set(ownedRows.map((row) => row.playerId));
+  const unownedRows: PlayerDirectoryRow[] = livePlayers
+    .filter((player) => !ownedPlayerIds.has(player.id))
+    .map((player) => ({
+      fantasyTeamId: `unowned-${player.id}`,
+      fantasyTeamName: "Unowned",
+      fantasyOwnerName: "Unowned",
+      playerId: player.id,
+      playerName: player.shortName,
+      iplTeamShortName: player.teamShortName,
+      basePoints: player.overallPoints,
+      boostedPoints: player.overallPoints,
+      captainWindows: [],
+      viceCaptainWindows: [],
+    }));
+  const rows: PlayerDirectoryRow[] = [...ownedRows, ...unownedRows];
 
   console.info("[players-page] Player directory prepared", {
     generatedAt: result.generatedAt,
     rows: rows.length,
+    ownedRows: ownedRows.length,
+    unownedRows: unownedRows.length,
   });
 
   return (
@@ -55,8 +77,8 @@ export default async function PlayersPage() {
         <p className="muted-label">Players</p>
         <h1 className="section-title mt-2">Player List</h1>
         <p className="mt-2 text-sm text-slate-600">
-          Search and filter player rows by IPL team and fantasy team, sorted by
-          points. Base points are default; C/VC-adjusted points are optional.
+          Search and filter all IPL players by IPL team and fantasy team, sorted
+          by points. Base points are default; C/VC-adjusted points are optional.
         </p>
       </header>
 
