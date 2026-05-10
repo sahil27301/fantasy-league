@@ -2,10 +2,8 @@ import Link from "next/link";
 import { getLeagueComputation } from "@/lib/data/score-service";
 import { getMatchProgression } from "@/lib/progression/match-progression";
 import { RefreshButton } from "@/components/refresh-button";
-import { ExitAdminButton } from "@/components/exit-admin-button";
 import { formatDateTimeIST, formatDelta, formatPoints } from "@/lib/utils/format";
 import { HorizontalBars } from "@/components/charts/horizontal-bars";
-import { isAdminSession } from "@/lib/auth/admin";
 import type { TeamStanding } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -54,8 +52,7 @@ export default async function Home({
 }) {
   const { mode: requestedMode } = await searchParams;
   const mode = resolveMode(requestedMode);
-  const [isAdmin, result, progression] = await Promise.all([
-    isAdminSession(),
+  const [result, progression] = await Promise.all([
     getLeagueComputation(false),
     getMatchProgression(false),
   ]);
@@ -152,9 +149,8 @@ export default async function Home({
           </div>
           <p className="mt-2 text-xs text-slate-500">{MODE_CONFIG[mode].helper}</p>
         </div>
-        <div className="mt-4 flex flex-wrap items-center gap-3">
-          {isAdmin ? <RefreshButton /> : null}
-          {isAdmin ? <ExitAdminButton /> : null}
+        <div className="mt-4 flex flex-wrap items-start gap-3">
+          <RefreshButton />
         </div>
       </section>
 

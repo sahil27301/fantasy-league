@@ -17,7 +17,6 @@ Mobile-first dashboard for your IPL fantasy mini-league with:
    ```bash
    cp .env.example .env.local
    ```
-   Set `ADMIN_ACCESS_KEY` in `.env.local` to a private secret string.
    Set `SUPABASE_SERVICE_ROLE_KEY` for server-side durability writes.
 3. Normalize your raw CSV:
    ```bash
@@ -50,9 +49,6 @@ Normalization also reads optional canonical name aliases from:
 Scoring is blocked if `data/unmatched_or_ambiguous.csv` has unresolved rows.
 Score refreshes are persisted in Supabase (`team_score_snapshots`, `player_points_snapshots`, `score_snapshot_payloads`) and reloaded after restarts.
 
-## Admin-only refresh control
+## Refresh control
 
-- Refresh is hidden for non-admin users.
-- To enable admin session in your own browser, open:
-  - `/api/admin/access?key=<ADMIN_ACCESS_KEY>&returnTo=/`
-- This sets an httpOnly cookie and reveals the refresh control.
+- Refresh is available to all users from the leaderboard.

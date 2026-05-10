@@ -1,18 +1,8 @@
-import { isAdminSession } from "@/lib/auth/admin";
 import { getLeagueComputation } from "@/lib/data/score-service";
 import { NextResponse } from "next/server";
 
 export async function POST() {
-  const isAdmin = await isAdminSession();
-  if (!isAdmin) {
-    console.warn("[api/refresh] Unauthorized refresh attempt blocked");
-    return NextResponse.json(
-      { error: "Admin access required" },
-      { status: 403 },
-    );
-  }
-
-  console.info("[api/refresh] Manual refresh triggered");
+  console.info("[api/refresh] Public refresh triggered");
   try {
     const result = await getLeagueComputation(true);
     return NextResponse.json({

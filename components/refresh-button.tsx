@@ -35,7 +35,7 @@ export function RefreshButton() {
       >
         {isPending ? "Refreshing..." : "Refresh Live Scores"}
       </button>
-      {message ? <p className="text-xs text-slate-500">{message}</p> : null}
+      <p className="min-h-4 text-xs text-slate-500">{message || ""}</p>
     </div>
   );
 }
