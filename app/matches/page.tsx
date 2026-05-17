@@ -44,9 +44,17 @@ export default async function MatchesPage() {
             href={`/matches/${upcomingPreview.preview.matchNumber}?mode=upcoming`}
             className="mt-3 block rounded-2xl border border-sky-200 bg-sky-50/70 p-4 transition hover:-translate-y-0.5"
           >
-            <h2 className="text-lg font-semibold text-slate-900">
-              {upcomingPreview.upcoming.matchName}
-            </h2>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h2 className="text-lg font-semibold text-slate-900">
+                {upcomingPreview.upcoming.matchName}
+              </h2>
+              <span className="rounded-full bg-indigo-100 px-2.5 py-1 text-xs font-semibold text-indigo-700">
+                {formatMatchupLabel([
+                  upcomingPreview.upcoming.homeTeamShortName ?? "",
+                  upcomingPreview.upcoming.awayTeamShortName ?? "",
+                ])}
+              </span>
+            </div>
             <p className="mt-1 text-sm text-slate-600">
               {upcomingPreview.upcoming.matchDateIso
                 ? `Starts: ${formatDateTimeIST(upcomingPreview.upcoming.matchDateIso)}`
