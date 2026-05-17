@@ -66,6 +66,7 @@ export default async function Home({
   const insightByTeam = new Map(
     result.teamInsights.map((insight) => [insight.leagueTeamId, insight]),
   );
+  const unsoldXi = result.unsoldXiBenchmark;
   const rankedRows: LeaderboardRow[] = standings
     .map((team) => {
       const noCaptaincyPoints = Number(
@@ -125,6 +126,13 @@ export default async function Home({
         <p className="mt-2 text-sm text-slate-600">
           Updated {formatDateTimeIST(result.generatedAt)}
         </p>
+        {unsoldXi ? (
+          <div className="mt-3 flex flex-wrap gap-2">
+            <span className="rounded-full bg-white/80 px-3 py-1 text-xs font-semibold text-indigo-700 ring-1 ring-indigo-100">
+              Unsold XI Max (C/VC): {formatPoints(unsoldXi.topXiTotal)}
+            </span>
+          </div>
+        ) : null}
         <div className="mt-5">
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
             Leaderboard Mode

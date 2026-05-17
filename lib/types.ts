@@ -90,10 +90,24 @@ export interface TeamInsights {
   statsV2: LeagueStatsV2;
 }
 
+export interface UnsoldXiBenchmark {
+  topXiTotal: number;
+  gapVsLeader: number;
+  topPlayers: {
+    playerId: number;
+    playerName: string;
+    teamShortName: string;
+    points: number;
+    multiplierRole: "captain" | "viceCaptain" | "normal";
+    boostedPoints: number;
+  }[];
+}
+
 export interface ScoreComputationResult {
   snapshot: ScoreSnapshot;
   teamInsights: TeamInsights[];
   generatedAt: string;
+  unsoldXiBenchmark?: UnsoldXiBenchmark;
 }
 
 export interface TeamMatchProgressPoint {

@@ -44,6 +44,59 @@ export default async function StatsPage() {
         </div>
       </section>
 
+      {result.unsoldXiBenchmark ? (
+        <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
+          <h2 className="text-lg font-semibold">Unsold XI Benchmark</h2>
+          <p className="text-sm text-slate-500">
+            Top 11 unsold IPL players with captaincy applied (top scorer as C, second as VC).
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2 text-xs">
+            <span className="rounded-full bg-indigo-100 px-3 py-1 font-semibold text-indigo-700">
+              Unsold XI Max (C/VC): {formatPoints(result.unsoldXiBenchmark.topXiTotal)}
+            </span>
+          </div>
+          <div className="mt-4 overflow-x-auto rounded-2xl ring-1 ring-slate-200/80">
+            <table className="min-w-full divide-y divide-slate-200 bg-white/85 text-sm">
+              <thead className="bg-slate-50/90">
+                <tr>
+                  <th className="px-3 py-2 text-left font-semibold text-slate-600">
+                    Player
+                  </th>
+                  <th className="px-3 py-2 text-left font-semibold text-slate-600">IPL</th>
+                  <th className="px-3 py-2 text-right font-semibold text-slate-600">
+                    Score
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {result.unsoldXiBenchmark.topPlayers.map((player) => (
+                  <tr key={`unsold-${player.playerId}`}>
+                    <td className="px-3 py-2 text-slate-800">
+                      <div className="flex flex-wrap items-center gap-1">
+                        <span>{player.playerName}</span>
+                        {player.multiplierRole === "captain" ? (
+                          <span className="rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-semibold text-indigo-700">
+                            C
+                          </span>
+                        ) : player.multiplierRole === "viceCaptain" ? (
+                          <span className="rounded-full bg-sky-100 px-2 py-0.5 text-xs font-semibold text-sky-700">
+                            VC
+                          </span>
+                        ) : null}
+                      </div>
+                    </td>
+                    <td className="px-3 py-2 text-slate-600">{player.teamShortName}</td>
+                    <td className="px-3 py-2 text-right font-semibold text-slate-900">
+                      {formatPoints(player.boostedPoints ?? player.points)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ) : null}
+
       {result.snapshot.standings.map((team) => {
         const insight = result.teamInsights.find(
           (item) => item.leagueTeamId === team.leagueTeamId,

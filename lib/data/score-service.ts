@@ -3,6 +3,8 @@ import {
   getLeagueTeams,
   getNormalizedRoster,
 } from "@/lib/data/seed";
+import { fetchLivePlayers } from "@/lib/ipl/client";
+import type { IplLivePlayer } from "@/lib/types";
 import {
   fetchLatestScoreComputation,
   persistScoreComputation,
@@ -10,39 +12,47 @@ import {
 import { getMatchProgression } from "@/lib/progression/match-progression";
 import { getLiveCache, setLiveResult } from "@/lib/state/live-cache";
 import { buildTeamInsights } from "@/lib/stats/insights";
-import type { ScoreComputationResult, TeamStanding } from "@/lib/types";
+import type {
+  NormalizedRosterEntry,
+  ScoreComputationResult,
+  TeamStanding,
+  UnsoldXiBenchmark,
+} from "@/lib/types";
 import { promises as fs } from "node:fs";
 import path from "node:path";
 
 export async function getLeagueComputation(forceRefresh = false) {
+  const roster = getNormalizedRoster();
   const cache = getLiveCache();
   if (!forceRefresh && cache.lastResult) {
+    const hydrated = await hydrateUnsoldXiBenchmark(cache.lastResult, roster);
     console.info("[score-service] Returning cached score result", {
-      generatedAt: cache.lastResult.generatedAt,
+      generatedAt: hydrated.generatedAt,
     });
+    setLiveResult(hydrated);
     try {
-      await persistScoreComputation(cache.lastResult);
+      await persistScoreComputation(hydrated);
     } catch (error) {
       console.error("[score-service] Cached persistence attempt failed", {
         error,
       });
     }
-    return cache.lastResult;
+    return hydrated;
   }
 
   if (!forceRefresh) {
     const persisted = await fetchLatestScoreComputation();
     if (persisted) {
+      const hydrated = await hydrateUnsoldXiBenchmark(persisted, roster);
       console.info("[score-service] Returning persisted score result", {
-        generatedAt: persisted.generatedAt,
+        generatedAt: hydrated.generatedAt,
       });
-      setLiveResult(persisted);
-      return persisted;
+      setLiveResult(hydrated);
+      return hydrated;
     }
   }
 
   const teams = getLeagueTeams();
-  const roster = getNormalizedRoster();
   const captainWindows = getCaptainWindows();
   await assertNoUnresolvedRows();
 
@@ -98,6 +108,23 @@ export async function getLeagueComputation(forceRefresh = false) {
       team.transferImpactScore,
     ]),
   );
+  let unsoldXiBenchmark: UnsoldXiBenchmark | undefined;
+  try {
+    const livePlayers = await fetchLivePlayers();
+    unsoldXiBenchmark = computeUnsoldXiBenchmark({
+      standings,
+      roster,
+      livePlayers,
+    });
+    console.info("[score-service] Computed unsold XI benchmark", {
+      topXiTotal: unsoldXiBenchmark.topXiTotal,
+      gapVsLeader: unsoldXiBenchmark.gapVsLeader,
+    });
+  } catch (error) {
+    console.error("[score-service] Unable to compute unsold XI benchmark", {
+      error,
+    });
+  }
 
   const result: ScoreComputationResult = {
     snapshot: {
@@ -107,6 +134,7 @@ export async function getLeagueComputation(forceRefresh = false) {
     },
     teamInsights: buildTeamInsights(standings, { transferImpactByTeam }),
     generatedAt: progression.generatedAt,
+    unsoldXiBenchmark,
   };
 
   setLiveResult(result);
@@ -156,4 +184,79 @@ async function assertNoUnresolvedRows() {
     }
     throw error;
   }
+}
+
+async function hydrateUnsoldXiBenchmark(
+  result: ScoreComputationResult,
+  roster: NormalizedRosterEntry[],
+) {
+  const hasUpgradedUnsoldFields =
+    Array.isArray(result.unsoldXiBenchmark?.topPlayers) &&
+    result.unsoldXiBenchmark.topPlayers.every(
+      (player) =>
+        typeof player.boostedPoints === "number" &&
+        (player.multiplierRole === "captain" ||
+          player.multiplierRole === "viceCaptain" ||
+          player.multiplierRole === "normal"),
+    );
+  if (result.unsoldXiBenchmark && hasUpgradedUnsoldFields) {
+    return result;
+  }
+  try {
+    const livePlayers = await fetchLivePlayers();
+    const unsoldXiBenchmark = computeUnsoldXiBenchmark({
+      standings: result.snapshot.standings,
+      roster,
+      livePlayers,
+    });
+    return {
+      ...result,
+      unsoldXiBenchmark,
+    };
+  } catch (error) {
+    console.error("[score-service] Failed to hydrate unsold XI benchmark", {
+      error,
+    });
+    return result;
+  }
+}
+
+function computeUnsoldXiBenchmark({
+  standings,
+  roster,
+  livePlayers,
+}: {
+  standings: TeamStanding[];
+  roster: NormalizedRosterEntry[];
+  livePlayers: IplLivePlayer[];
+}): UnsoldXiBenchmark {
+  const ownedPlayerIds = new Set(roster.map((entry) => entry.resolvedPlayerId));
+  const unsoldPlayers = livePlayers
+    .filter((player) => !ownedPlayerIds.has(player.id))
+    .sort((a, b) => b.overallPoints - a.overallPoints);
+  const topPlayers = unsoldPlayers.slice(0, 11).map((player, index) => {
+    const points = Number(player.overallPoints.toFixed(2));
+    const multiplierRole: "captain" | "viceCaptain" | "normal" =
+      index === 0 ? "captain" : index === 1 ? "viceCaptain" : "normal";
+    const multiplier = multiplierRole === "captain" ? 2 : multiplierRole === "viceCaptain" ? 1.5 : 1;
+    const boostedPoints = Number((points * multiplier).toFixed(2));
+    return {
+      playerId: player.id,
+      playerName: player.shortName,
+      teamShortName: player.teamShortName,
+      points,
+      multiplierRole,
+      boostedPoints,
+    };
+  });
+  const topXiTotal = Number(
+    topPlayers.reduce((sum, player) => sum + player.boostedPoints, 0).toFixed(2),
+  );
+  const leaderPoints = standings[0]?.totalPoints ?? 0;
+  const gapVsLeader = Number((topXiTotal - leaderPoints).toFixed(2));
+  return {
+    topXiTotal,
+    gapVsLeader,
+    topPlayers,
+  };
 }
