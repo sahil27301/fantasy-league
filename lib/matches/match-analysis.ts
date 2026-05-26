@@ -58,6 +58,29 @@ function normalizeTeamShortName(value: string | null | undefined) {
   return (value ?? "").trim().toUpperCase();
 }
 
+function parseMatchDateTimeMs(value: string | null): number | null {
+  if (!value) {
+    return null;
+  }
+  const trimmed = value.trim();
+  if (!trimmed) {
+    return null;
+  }
+  const slashDateMatch =
+    /^(\d{1,2})\/(\d{1,2})\/(\d{4})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?$/.exec(trimmed);
+  if (slashDateMatch) {
+    const month = Number(slashDateMatch[1]);
+    const day = Number(slashDateMatch[2]);
+    const year = Number(slashDateMatch[3]);
+    const hour = Number(slashDateMatch[4]);
+    const minute = Number(slashDateMatch[5]);
+    const second = Number(slashDateMatch[6] ?? "0");
+    return Date.UTC(year, month - 1, day, hour, minute, second);
+  }
+  const parsed = Date.parse(trimmed);
+  return Number.isNaN(parsed) ? null : parsed;
+}
+
 async function mapWithConcurrency<T, R>(
   items: T[],
   concurrency: number,
@@ -112,6 +135,27 @@ function buildRosterByTeamWindow() {
   return { teams, rosterByTeamWindow: byTeamWindow };
 }
 
+function getEffectiveRosterWindowForTeam(
+  teamWindowMap: Map<1 | 2 | 3, Map<number, NormalizedRosterEntry>> | undefined,
+  activeWindow: 1 | 2 | 3,
+) {
+  const candidateWindows: (1 | 2 | 3)[] =
+    activeWindow === 3 ? [3, 2, 1] : activeWindow === 2 ? [2, 1] : [1];
+  for (const candidateWindow of candidateWindows) {
+    const rosterForWindow = teamWindowMap?.get(candidateWindow);
+    if (rosterForWindow && rosterForWindow.size > 0) {
+      return {
+        rosterWindowUsed: candidateWindow,
+        entries: [...rosterForWindow.values()],
+      };
+    }
+  }
+  return {
+    rosterWindowUsed: activeWindow,
+    entries: [] as NormalizedRosterEntry[],
+  };
+}
+
 function buildUpcomingPreview(
   matchNumber: number,
   rosterByTeamWindow: Map<string, Map<1 | 2 | 3, Map<number, NormalizedRosterEntry>>>,
@@ -123,14 +167,27 @@ function buildUpcomingPreview(
   const playingTeamSet = new Set(
     playingIplTeams.map((team) => normalizeTeamShortName(team)).filter(Boolean),
   );
+  const rosterWindowFallbacks: {
+    leagueTeamId: string;
+    activeWindow: 1 | 2 | 3;
+    usedWindow: 1 | 2 | 3;
+  }[] = [];
   const fantasyTeamBreakdowns: MatchFantasyTeamBreakdown[] = teams.map((team) => {
-    const rawRosterWindow = [
-      ...(rosterByTeamWindow.get(team.id)?.get(activeWindow)?.values() ?? []),
-    ];
+    const { entries: effectiveRosterWindow, rosterWindowUsed } = getEffectiveRosterWindowForTeam(
+      rosterByTeamWindow.get(team.id),
+      activeWindow,
+    );
+    if (rosterWindowUsed !== activeWindow) {
+      rosterWindowFallbacks.push({
+        leagueTeamId: team.id,
+        activeWindow,
+        usedWindow: rosterWindowUsed,
+      });
+    }
     const rosterWindow =
       playingTeamSet.size === 0
-        ? rawRosterWindow
-        : rawRosterWindow.filter((player) =>
+        ? effectiveRosterWindow
+        : effectiveRosterWindow.filter((player) =>
             playingTeamSet.has(normalizeTeamShortName(player.iplTeamShortName)),
           );
     const captainWindow = captainWindows.find(
@@ -158,6 +215,13 @@ function buildUpcomingPreview(
       players,
     };
   });
+  if (rosterWindowFallbacks.length > 0) {
+    console.info("[match-analysis] Upcoming preview roster window fallback applied", {
+      matchNumber,
+      activeWindow,
+      rosterWindowFallbacks,
+    });
+  }
 
   return {
     matchNumber,
@@ -310,6 +374,17 @@ export async function getMatchAnalysisComputation(
       (entry) => entry.matchNumber === null || entry.matchNumber > maxCompletedMatch,
     )
     .sort((a, b) => {
+      const aDateMs = parseMatchDateTimeMs(a.matchDateIso);
+      const bDateMs = parseMatchDateTimeMs(b.matchDateIso);
+      if (aDateMs !== null && bDateMs !== null && aDateMs !== bDateMs) {
+        return aDateMs - bDateMs;
+      }
+      if (aDateMs !== null && bDateMs === null) {
+        return -1;
+      }
+      if (aDateMs === null && bDateMs !== null) {
+        return 1;
+      }
       if (a.matchNumber === null && b.matchNumber === null) {
         return a.matchName.localeCompare(b.matchName);
       }
@@ -323,6 +398,12 @@ export async function getMatchAnalysisComputation(
     });
 
   const analysesByMatch: Record<number, MatchAnalysis> = {};
+  const completedRosterWindowFallbacks: {
+    matchNumber: number;
+    leagueTeamId: string;
+    activeWindow: 1 | 2 | 3;
+    usedWindow: 1 | 2 | 3;
+  }[] = [];
 
   for (const matchNumber of completedMatches) {
     const activeWindow = resolveWindowIndex(matchNumber);
@@ -332,13 +413,22 @@ export async function getMatchAnalysisComputation(
     const fantasyTeamBreakdowns: MatchFantasyTeamBreakdown[] = [];
 
     for (const team of teams) {
-      const rawRosterWindow = [
-        ...(rosterByTeamWindow.get(team.id)?.get(activeWindow)?.values() ?? []),
-      ];
+      const { entries: effectiveRosterWindow, rosterWindowUsed } = getEffectiveRosterWindowForTeam(
+        rosterByTeamWindow.get(team.id),
+        activeWindow,
+      );
+      if (rosterWindowUsed !== activeWindow) {
+        completedRosterWindowFallbacks.push({
+          matchNumber,
+          leagueTeamId: team.id,
+          activeWindow,
+          usedWindow: rosterWindowUsed,
+        });
+      }
       const rosterWindow =
         playingTeamSet.size === 0
-          ? rawRosterWindow
-          : rawRosterWindow.filter((player) =>
+          ? effectiveRosterWindow
+          : effectiveRosterWindow.filter((player) =>
               playingTeamSet.has(normalizeTeamShortName(player.iplTeamShortName)),
             );
       const captainWindow = captainWindows.find(
@@ -434,6 +524,12 @@ export async function getMatchAnalysisComputation(
       fantasyTeamBreakdowns,
     };
   }
+  if (completedRosterWindowFallbacks.length > 0) {
+    console.info("[match-analysis] Completed-match roster window fallback applied", {
+      fallbackCount: completedRosterWindowFallbacks.length,
+      sample: completedRosterWindowFallbacks.slice(0, 12),
+    });
+  }
 
   const result: MatchAnalysisComputationResult = {
     generatedAt: new Date().toISOString(),
@@ -450,7 +546,9 @@ export async function getMatchAnalysisComputation(
   console.info("[match-analysis] Match analysis computation complete", {
     completedMatches: completedMatches.length,
     upcomingMatches: upcomingMatches.length,
-    sampleUpcoming: upcomingMatches.slice(0, 3).map((entry) => entry.matchName),
+    sampleUpcoming: upcomingMatches
+      .slice(0, 3)
+      .map((entry) => `${entry.matchName} @ ${entry.matchDateIso ?? "unknown"}`),
   });
 
   return result;
@@ -458,15 +556,18 @@ export async function getMatchAnalysisComputation(
 
 export async function getUpcomingMatchPreview(forceRefresh = false) {
   const result = await getMatchAnalysisComputation(forceRefresh);
-  const latestUpcoming =
-    result.upcomingMatches.find((match) => match.matchNumber !== null) ??
-    result.upcomingMatches[0] ??
-    null;
+  const latestUpcoming = result.upcomingMatches[0] ?? null;
   if (!latestUpcoming) {
     return null;
   }
   const inferredMatchNumber =
     latestUpcoming.matchNumber ?? (result.completedMatches.at(-1) ?? 0) + 1;
+  console.info("[match-analysis] Upcoming match selected", {
+    selectedMatchName: latestUpcoming.matchName,
+    selectedMatchNumber: latestUpcoming.matchNumber,
+    selectedMatchDateIso: latestUpcoming.matchDateIso,
+    inferredMatchNumber,
+  });
   const { rosterByTeamWindow } = buildRosterByTeamWindow();
   const playingIplTeams = [
     latestUpcoming.homeTeamShortName,

@@ -1,10 +1,10 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
 import {
   getMatchAnalysisComputation,
   getUpcomingMatchPreview,
 } from "@/lib/matches/match-analysis";
 import { formatDateTimeIST, formatPoints } from "@/lib/utils/format";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -38,7 +38,10 @@ export default async function MatchDetailPage({
   const isUpcomingMode = mode === "upcoming";
   if (isUpcomingMode) {
     const upcomingPreview = await getUpcomingMatchPreview(false);
-    if (!upcomingPreview || upcomingPreview.preview.matchNumber !== matchNumber) {
+    if (
+      !upcomingPreview ||
+      upcomingPreview.preview.matchNumber !== matchNumber
+    ) {
       notFound();
     }
     const preview = upcomingPreview.preview;
@@ -46,8 +49,12 @@ export default async function MatchDetailPage({
       upcomingPreview.upcoming.homeTeamShortName,
       upcomingPreview.upcoming.awayTeamShortName,
     ].filter((team): team is string => Boolean(team));
-    const sortedPreviewTeamBreakdowns = [...(preview.fantasyTeamBreakdowns ?? [])].sort(
-      (a, b) => b.players.length - a.players.length || a.displayName.localeCompare(b.displayName),
+    const sortedPreviewTeamBreakdowns = [
+      ...(preview.fantasyTeamBreakdowns ?? []),
+    ].sort(
+      (a, b) =>
+        b.players.length - a.players.length ||
+        a.displayName.localeCompare(b.displayName),
     );
     const visiblePreviewTeamBreakdowns = sortedPreviewTeamBreakdowns.filter(
       (team) => team.players.length > 0,
@@ -56,7 +63,9 @@ export default async function MatchDetailPage({
       <main className="flex flex-col gap-4 pb-10 md:gap-5">
         <header className="glass-card-strong rounded-[1.75rem] p-5 md:p-6">
           <p className="muted-label">Upcoming Match Preview</p>
-          <h1 className="section-title mt-2">{upcomingPreview.upcoming.matchName}</h1>
+          <h1 className="section-title mt-2">
+            {upcomingPreview.upcoming.matchName}
+          </h1>
           <div className="mt-2">
             <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-700">
               Teams: {formatTeamsLabel(upcomingTeams)}
@@ -73,17 +82,25 @@ export default async function MatchDetailPage({
         </header>
 
         <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
-          <h2 className="text-lg font-semibold text-slate-900">Fantasy Teams</h2>
+          <h2 className="text-lg font-semibold text-slate-900">
+            Fantasy Teams
+          </h2>
           <p className="text-sm text-slate-500">
-            Window {preview.activeWindow} roster with C/VC tags for this upcoming match.
+            Window {preview.activeWindow} roster with C/VC tags for this
+            upcoming match.
           </p>
           <div className="mt-4 grid gap-3">
             {visiblePreviewTeamBreakdowns.map((team) => (
-              <div key={team.leagueTeamId} className="rounded-2xl bg-white/85 p-4 ring-1 ring-slate-200/70">
+              <div
+                key={team.leagueTeamId}
+                className="rounded-2xl bg-white/85 p-4 ring-1 ring-slate-200/70"
+              >
                 <h3 className="text-base font-semibold text-slate-900">
                   {team.displayName}
                 </h3>
-                <p className="text-sm text-slate-500">Owner: {team.ownerName}</p>
+                <p className="text-sm text-slate-500">
+                  Owner: {team.ownerName}
+                </p>
                 <div className="mt-3 overflow-x-auto rounded-xl ring-1 ring-slate-200/70">
                   <table className="min-w-full divide-y divide-slate-200 text-sm">
                     <thead className="bg-slate-50/90">
@@ -159,7 +176,8 @@ export default async function MatchDetailPage({
           </span>
         </div>
         <p className="mt-2 text-sm text-slate-600">
-          Player and fantasy team stats using Window {analysis.activeWindow} rules.
+          Player and fantasy team stats using Window {analysis.activeWindow}{" "}
+          rules.
         </p>
       </header>
 
@@ -179,7 +197,9 @@ export default async function MatchDetailPage({
                   <h3 className="text-base font-semibold text-slate-900">
                     {team.displayName}
                   </h3>
-                  <p className="text-sm text-slate-500">Owner: {team.ownerName}</p>
+                  <p className="text-sm text-slate-500">
+                    Owner: {team.ownerName}
+                  </p>
                 </div>
                 <div className="text-right">
                   <p className="text-sm text-slate-500">Total</p>
@@ -249,7 +269,9 @@ export default async function MatchDetailPage({
       </section>
 
       <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
-        <h2 className="text-lg font-semibold text-slate-900">Cricket Players</h2>
+        <h2 className="text-lg font-semibold text-slate-900">
+          Cricket Players
+        </h2>
         <p className="text-sm text-slate-500">
           Overall match performance with fantasy-team ownership context.
         </p>
@@ -257,9 +279,15 @@ export default async function MatchDetailPage({
           <table className="min-w-full divide-y divide-slate-200 bg-white/85 text-sm">
             <thead className="bg-slate-50/90">
               <tr>
-                <th className="px-3 py-2 text-left font-semibold text-slate-600">Player</th>
-                <th className="px-3 py-2 text-left font-semibold text-slate-600">IPL Team</th>
-                <th className="px-3 py-2 text-right font-semibold text-slate-600">Points</th>
+                <th className="px-3 py-2 text-left font-semibold text-slate-600">
+                  Player
+                </th>
+                <th className="px-3 py-2 text-left font-semibold text-slate-600">
+                  IPL Team
+                </th>
+                <th className="px-3 py-2 text-right font-semibold text-slate-600">
+                  Points
+                </th>
                 <th className="px-3 py-2 text-left font-semibold text-slate-600">
                   Fantasy Teams
                 </th>
@@ -283,7 +311,9 @@ export default async function MatchDetailPage({
                       ) : null}
                     </div>
                   </td>
-                  <td className="px-3 py-2 text-slate-600">{player.teamShortName}</td>
+                  <td className="px-3 py-2 text-slate-600">
+                    {player.teamShortName}
+                  </td>
                   <td className="px-3 py-2 text-right font-semibold text-slate-900">
                     {formatPoints(player.points)}
                   </td>

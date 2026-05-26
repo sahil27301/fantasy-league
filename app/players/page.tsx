@@ -31,8 +31,7 @@ export default async function PlayersPage() {
         .filter(
           (window) =>
             window.leagueTeamId === team.leagueTeamId &&
-            window.captainPlayerId === player.playerId &&
-            window.windowIndex <= 2,
+            window.captainPlayerId === player.playerId,
         )
         .map((window) => window.windowIndex)
         .sort((a, b) => a - b),
@@ -40,8 +39,7 @@ export default async function PlayersPage() {
         .filter(
           (window) =>
             window.leagueTeamId === team.leagueTeamId &&
-            window.viceCaptainPlayerId === player.playerId &&
-            window.windowIndex <= 2,
+            window.viceCaptainPlayerId === player.playerId,
         )
         .map((window) => window.windowIndex)
         .sort((a, b) => a - b),
@@ -69,6 +67,9 @@ export default async function PlayersPage() {
     rows: rows.length,
     ownedRows: ownedRows.length,
     unownedRows: unownedRows.length,
+    captainWindowIndexes: [...new Set(captainWindows.map((window) => window.windowIndex))].sort(
+      (a, b) => a - b,
+    ),
   });
 
   return (

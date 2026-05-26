@@ -125,6 +125,51 @@ function ownerToTeamId(ownerName, teams) {
   return team?.id ?? null;
 }
 
+function applyNoTransferPlayoffWindow(entries) {
+  const byOwner = new Map();
+  for (const entry of entries) {
+    const ownerKey = entry.ownerName.toLowerCase();
+    const ownerEntries = byOwner.get(ownerKey) ?? [];
+    ownerEntries.push(entry);
+    byOwner.set(ownerKey, ownerEntries);
+  }
+
+  const output = [...entries];
+  const clonedOwners = [];
+  const skippedOwners = [];
+
+  for (const [ownerKey, ownerEntries] of byOwner.entries()) {
+    const hasWindow3 = ownerEntries.some((entry) => entry.windowIndex === 3);
+    if (hasWindow3) {
+      skippedOwners.push(ownerKey);
+      continue;
+    }
+
+    const window2Entries = ownerEntries.filter((entry) => entry.windowIndex === 2);
+    if (window2Entries.length === 0) {
+      skippedOwners.push(ownerKey);
+      continue;
+    }
+
+    for (const entry of window2Entries) {
+      output.push({
+        ...entry,
+        windowIndex: 3,
+      });
+    }
+    clonedOwners.push({
+      ownerName: window2Entries[0].ownerName,
+      clonedEntries: window2Entries.length,
+    });
+  }
+
+  return {
+    entries: output,
+    clonedOwners,
+    skippedOwnersCount: skippedOwners.length,
+  };
+}
+
 async function main() {
   console.info("[normalize-csv] Starting normalization", { inputPath: INPUT_PATH });
   const [csvRaw, teamsRaw, aliasesRaw, playersResponse] = await Promise.all([
@@ -240,9 +285,24 @@ async function main() {
     }
   }
   const dedupedNormalized = [...dedupedMap.values()];
+  const playoffExpanded = applyNoTransferPlayoffWindow(dedupedNormalized);
+  const playoffExpandedDedupedMap = new Map();
+  for (const entry of playoffExpanded.entries) {
+    const key = `${entry.ownerName.toLowerCase()}::${entry.resolvedPlayerId}::${entry.windowIndex}`;
+    const existing = playoffExpandedDedupedMap.get(key);
+    if (!existing || rolePriority(entry.captaincyRole) > rolePriority(existing.captaincyRole)) {
+      playoffExpandedDedupedMap.set(key, entry);
+    }
+  }
+  const finalNormalized = [...playoffExpandedDedupedMap.values()];
+  console.info("[normalize-csv] Applied no-transfer playoff expansion", {
+    clonedOwners: playoffExpanded.clonedOwners,
+    clonedOwnerCount: playoffExpanded.clonedOwners.length,
+    skippedOwnersCount: playoffExpanded.skippedOwnersCount,
+  });
 
   const captainWindows = [];
-  const owners = [...new Set(dedupedNormalized.map((entry) => entry.ownerName))];
+  const owners = [...new Set(finalNormalized.map((entry) => entry.ownerName))];
   owners.forEach((ownerName) => {
     const leagueTeamId = ownerToTeamId(ownerName, teams);
     if (!leagueTeamId) {
@@ -257,7 +317,7 @@ async function main() {
     }
 
     [1, 2].forEach((windowIndex) => {
-      const windowEntries = dedupedNormalized.filter(
+      const windowEntries = finalNormalized.filter(
         (entry) => entry.ownerName === ownerName && entry.windowIndex === windowIndex,
       );
       const captains = windowEntries.filter((entry) => entry.captaincyRole === "captain");
@@ -289,7 +349,7 @@ async function main() {
     });
   });
 
-  await fs.writeFile(rosterOutputPath, JSON.stringify(dedupedNormalized, null, 2));
+  await fs.writeFile(rosterOutputPath, JSON.stringify(finalNormalized, null, 2));
   await fs.writeFile(captainOutputPath, JSON.stringify(captainWindows, null, 2));
   await fs.writeFile(
     confirmationsOutputPath,
@@ -307,7 +367,7 @@ async function main() {
 
   console.info("[normalize-csv] Normalization summary", {
     mode: "strict_api_confirmed_matching_only",
-    normalizedRecords: dedupedNormalized.length,
+    normalizedRecords: finalNormalized.length,
     confirmedPlayerMappings: confirmations.size,
     captainWindows: captainWindows.length,
     unresolvedRows: unresolvedRows.length,

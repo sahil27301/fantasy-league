@@ -28,7 +28,9 @@ export function TeamLeadershipBreakdown({
   const [selectedRolesByPlayer, setSelectedRolesByPlayer] = useState<
     Record<string, "captain" | "viceCaptain">
   >({});
-  const [activeWindow, setActiveWindow] = useState<1 | 2 | 3>(1);
+  const [activeWindow, setActiveWindow] = useState<1 | 2 | 3>(
+    leadershipWindows[0]?.windowIndex ?? 1,
+  );
   const chartSectionRef = useRef<HTMLElement | null>(null);
 
   const sortedWindows = useMemo(
@@ -37,13 +39,17 @@ export function TeamLeadershipBreakdown({
   );
 
   const active = sortedWindows.find((window) => window.windowIndex === activeWindow);
-  const window1 = sortedWindows.find((window) => window.windowIndex === 1);
-  const window2 = sortedWindows.find((window) => window.windowIndex === 2);
-  const hasChanged =
-    window1 && window2
-      ? window1.captainName !== window2.captainName ||
-        window1.viceCaptainName !== window2.viceCaptainName
-      : false;
+  const hasChanged = useMemo(() => {
+    if (sortedWindows.length < 2) {
+      return false;
+    }
+    const first = sortedWindows[0];
+    return sortedWindows.some(
+      (window) =>
+        window.captainName !== first.captainName ||
+        window.viceCaptainName !== first.viceCaptainName,
+    );
+  }, [sortedWindows]);
 
   const handleLeadershipPlayerSelect = (
     playerName: string,
@@ -96,74 +102,76 @@ export function TeamLeadershipBreakdown({
               hasChanged ? "bg-indigo-100 text-indigo-700" : "bg-slate-100 text-slate-700"
             }`}
           >
-            {hasChanged ? "Changed after Match 35" : "No C/VC change in Window 2"}
+            {sortedWindows.length < 2
+              ? "Single leadership window"
+              : hasChanged
+                ? "C/VC changed across windows"
+                : "No C/VC change across windows"}
           </span>
         </div>
 
         <div className="mt-4 grid gap-2 sm:grid-cols-2">
-          {sortedWindows
-            .filter((window) => window.windowIndex <= 2)
-            .map((window) => (
-              <button
-                key={window.windowIndex}
-                type="button"
-                onClick={() => handleWindowSelect(window)}
-                className={`rounded-2xl border p-4 text-left transition ${
-                  activeWindow === window.windowIndex
-                    ? "border-indigo-300 bg-indigo-50/80"
-                    : "border-slate-200 bg-white/75 hover:bg-white"
-                }`}
-              >
-                <p className="text-xs font-semibold uppercase text-slate-500">
-                  Window {window.windowIndex} (M{window.fromMatch}-{window.toMatch})
-                </p>
-                <p className="mt-2 text-sm text-slate-600">
-                  Captain:
-                  <span
-                    className={`ml-1 cursor-pointer rounded-md px-1 font-semibold underline decoration-dotted transition ${
-                      selectedPlayers.includes(window.captainName)
-                        ? "bg-indigo-100 text-indigo-700"
-                        : "text-slate-900"
-                    }`}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      event.stopPropagation();
-                      handleLeadershipPlayerSelect(window.captainName, "captain");
-                    }}
-                  >
-                    {window.captainName}
-                  </span>
-                </p>
-                <p className="text-sm text-slate-600">
-                  Vice-Captain:
-                  <span
-                    className={`ml-1 cursor-pointer rounded-md px-1 font-semibold underline decoration-dotted transition ${
-                      selectedPlayers.includes(window.viceCaptainName)
-                        ? "bg-indigo-100 text-indigo-700"
-                        : "text-slate-900"
-                    }`}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      event.stopPropagation();
-                      handleLeadershipPlayerSelect(
-                        window.viceCaptainName,
-                        "viceCaptain",
-                      );
-                    }}
-                  >
-                    {window.viceCaptainName}
-                  </span>
-                </p>
-                <div className="mt-2 flex gap-2 text-xs">
-                  <span className="rounded-full bg-white px-2 py-1 text-slate-700 ring-1 ring-slate-200">
-                    C Bonus {formatPoints(window.captainBonus)}
-                  </span>
-                  <span className="rounded-full bg-white px-2 py-1 text-slate-700 ring-1 ring-slate-200">
-                    VC Bonus {formatPoints(window.viceCaptainBonus)}
-                  </span>
-                </div>
-              </button>
-            ))}
+          {sortedWindows.map((window) => (
+            <button
+              key={window.windowIndex}
+              type="button"
+              onClick={() => handleWindowSelect(window)}
+              className={`rounded-2xl border p-4 text-left transition ${
+                activeWindow === window.windowIndex
+                  ? "border-indigo-300 bg-indigo-50/80"
+                  : "border-slate-200 bg-white/75 hover:bg-white"
+              }`}
+            >
+              <p className="text-xs font-semibold uppercase text-slate-500">
+                Window {window.windowIndex} (M{window.fromMatch}-{window.toMatch})
+              </p>
+              <p className="mt-2 text-sm text-slate-600">
+                Captain:
+                <span
+                  className={`ml-1 cursor-pointer rounded-md px-1 font-semibold underline decoration-dotted transition ${
+                    selectedPlayers.includes(window.captainName)
+                      ? "bg-indigo-100 text-indigo-700"
+                      : "text-slate-900"
+                  }`}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    handleLeadershipPlayerSelect(window.captainName, "captain");
+                  }}
+                >
+                  {window.captainName}
+                </span>
+              </p>
+              <p className="text-sm text-slate-600">
+                Vice-Captain:
+                <span
+                  className={`ml-1 cursor-pointer rounded-md px-1 font-semibold underline decoration-dotted transition ${
+                    selectedPlayers.includes(window.viceCaptainName)
+                      ? "bg-indigo-100 text-indigo-700"
+                      : "text-slate-900"
+                  }`}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    handleLeadershipPlayerSelect(
+                      window.viceCaptainName,
+                      "viceCaptain",
+                    );
+                  }}
+                >
+                  {window.viceCaptainName}
+                </span>
+              </p>
+              <div className="mt-2 flex gap-2 text-xs">
+                <span className="rounded-full bg-white px-2 py-1 text-slate-700 ring-1 ring-slate-200">
+                  C Bonus {formatPoints(window.captainBonus)}
+                </span>
+                <span className="rounded-full bg-white px-2 py-1 text-slate-700 ring-1 ring-slate-200">
+                  VC Bonus {formatPoints(window.viceCaptainBonus)}
+                </span>
+              </div>
+            </button>
+          ))}
         </div>
 
         {active ? (

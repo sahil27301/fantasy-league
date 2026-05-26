@@ -16,6 +16,14 @@
     "viceCaptainPlayerId": 114349
   },
   {
+    "leagueTeamId": "shreya",
+    "windowIndex": 3,
+    "fromMatch": 71,
+    "toMatch": 999,
+    "captainPlayerId": 5132,
+    "viceCaptainPlayerId": 114349
+  },
+  {
     "leagueTeamId": "sahil",
     "windowIndex": 1,
     "fromMatch": 1,
@@ -32,6 +40,14 @@
     "viceCaptainPlayerId": 9782
   },
   {
+    "leagueTeamId": "sahil",
+    "windowIndex": 3,
+    "fromMatch": 71,
+    "toMatch": 999,
+    "captainPlayerId": 9782,
+    "viceCaptainPlayerId": 66799
+  },
+  {
     "leagueTeamId": "monu",
     "windowIndex": 1,
     "fromMatch": 1,
@@ -44,6 +60,14 @@
     "windowIndex": 2,
     "fromMatch": 36,
     "toMatch": 70,
+    "captainPlayerId": 59736,
+    "viceCaptainPlayerId": 71370
+  },
+  {
+    "leagueTeamId": "monu",
+    "windowIndex": 3,
+    "fromMatch": 71,
+    "toMatch": 999,
     "captainPlayerId": 59736,
     "viceCaptainPlayerId": 71370
   },
@@ -64,6 +88,14 @@
     "viceCaptainPlayerId": 71366
   },
   {
+    "leagueTeamId": "pooja",
+    "windowIndex": 3,
+    "fromMatch": 71,
+    "toMatch": 999,
+    "captainPlayerId": 65687,
+    "viceCaptainPlayerId": 62023
+  },
+  {
     "leagueTeamId": "ranveer",
     "windowIndex": 1,
     "fromMatch": 1,
@@ -78,6 +110,14 @@
     "toMatch": 70,
     "captainPlayerId": 71151,
     "viceCaptainPlayerId": 100570
+  },
+  {
+    "leagueTeamId": "ranveer",
+    "windowIndex": 3,
+    "fromMatch": 71,
+    "toMatch": 999,
+    "captainPlayerId": 70296,
+    "viceCaptainPlayerId": 66243
   },
   {
     "leagueTeamId": "sid",
@@ -96,6 +136,14 @@
     "viceCaptainPlayerId": 67469
   },
   {
+    "leagueTeamId": "sid",
+    "windowIndex": 3,
+    "fromMatch": 71,
+    "toMatch": 999,
+    "captainPlayerId": 66818,
+    "viceCaptainPlayerId": 64724
+  },
+  {
     "leagueTeamId": "vedant",
     "windowIndex": 1,
     "fromMatch": 1,
@@ -110,6 +158,14 @@
     "toMatch": 70,
     "captainPlayerId": 61837,
     "viceCaptainPlayerId": 63961
+  },
+  {
+    "leagueTeamId": "vedant",
+    "windowIndex": 3,
+    "fromMatch": 71,
+    "toMatch": 999,
+    "captainPlayerId": 63611,
+    "viceCaptainPlayerId": 64254
   },
   {
     "leagueTeamId": "kashish",
@@ -128,6 +184,14 @@
     "viceCaptainPlayerId": 70222
   },
   {
+    "leagueTeamId": "kashish",
+    "windowIndex": 3,
+    "fromMatch": 71,
+    "toMatch": 999,
+    "captainPlayerId": 3993,
+    "viceCaptainPlayerId": 69500
+  },
+  {
     "leagueTeamId": "tanmay",
     "windowIndex": 1,
     "fromMatch": 1,
@@ -142,5 +206,13 @@
     "toMatch": 70,
     "captainPlayerId": 3852,
     "viceCaptainPlayerId": 64219
+  },
+  {
+    "leagueTeamId": "tanmay",
+    "windowIndex": 3,
+    "fromMatch": 71,
+    "toMatch": 999,
+    "captainPlayerId": 10232,
+    "viceCaptainPlayerId": 67402
   }
 ]

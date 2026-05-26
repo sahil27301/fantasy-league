@@ -1,9 +1,9 @@
-import Link from "next/link";
 import {
   getMatchAnalysisComputation,
   getUpcomingMatchPreview,
 } from "@/lib/matches/match-analysis";
 import { formatDateTimeIST } from "@/lib/utils/format";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +23,9 @@ export default async function MatchesPage() {
     getMatchAnalysisComputation(false),
     getUpcomingMatchPreview(false),
   ]);
-  const completedMatchesDesc = [...result.completedMatches].sort((a, b) => b - a);
+  const completedMatchesDesc = [...result.completedMatches].sort(
+    (a, b) => b - a,
+  );
 
   return (
     <main className="flex flex-col gap-4 pb-10 md:gap-5">
@@ -31,7 +33,8 @@ export default async function MatchesPage() {
         <p className="muted-label">Match Analysis</p>
         <h1 className="section-title mt-2">Match Cards</h1>
         <p className="mt-2 text-sm text-slate-600">
-          Open any match card to view cricket player stats and fantasy team-level breakdown.
+          Open any match card to view cricket player stats and fantasy
+          team-level breakdown.
         </p>
       </header>
 
@@ -69,7 +72,9 @@ export default async function MatchesPage() {
 
       <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-slate-900">Completed Matches</h2>
+          <h2 className="text-lg font-semibold text-slate-900">
+            Completed Matches
+          </h2>
           <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
             {completedMatchesDesc.length} completed
           </span>
@@ -86,7 +91,9 @@ export default async function MatchesPage() {
                   Match {matchNumber}
                 </h3>
                 <span className="rounded-full bg-indigo-100 px-2.5 py-1 text-xs font-semibold text-indigo-700">
-                  {formatMatchupLabel(result.analysesByMatch[matchNumber]?.playingIplTeams)}
+                  {formatMatchupLabel(
+                    result.analysesByMatch[matchNumber]?.playingIplTeams,
+                  )}
                 </span>
               </div>
               <p className="mt-1 text-sm text-slate-600">

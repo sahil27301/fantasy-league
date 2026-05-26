@@ -38,7 +38,7 @@ export default async function TeamPage({
     (progressionTeam.windowBonuses ?? []).map((window) => [window.windowIndex, window]),
   );
   const leadershipWindows = getCaptainWindows()
-    .filter((window) => window.leagueTeamId === id && window.windowIndex <= 2)
+    .filter((window) => window.leagueTeamId === id)
     .sort((a, b) => a.windowIndex - b.windowIndex)
     .map((window) => ({
       windowIndex: window.windowIndex,
@@ -50,8 +50,12 @@ export default async function TeamPage({
       captainBonus: windowBonusByIndex.get(window.windowIndex)?.captainBonus ?? 0,
       viceCaptainBonus: windowBonusByIndex.get(window.windowIndex)?.viceCaptainBonus ?? 0,
     }));
+  console.info("[team-page] Leadership windows prepared", {
+    leagueTeamId: id,
+    windowIndexes: leadershipWindows.map((window) => window.windowIndex),
+    leadershipWindowsCount: leadershipWindows.length,
+  });
   const theoreticalWindows = progressionTeam.theoreticalCaptaincy.windows
-    .filter((window) => window.windowIndex <= 2)
     .sort((a, b) => a.windowIndex - b.windowIndex)
     .map((window) => ({
       ...window,
@@ -103,7 +107,7 @@ export default async function TeamPage({
       <section className="glass-card rounded-[1.6rem] p-4 md:p-5">
         <p className="muted-label">Theoretical Max So Far</p>
         <h2 className="mt-2 text-lg font-semibold text-slate-900">
-          Captaincy optimization (W1 + W2)
+          Captaincy optimization (all windows)
         </h2>
         <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
           <div className="metric-tile">

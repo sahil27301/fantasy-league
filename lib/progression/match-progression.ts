@@ -68,6 +68,25 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
   const teams = getLeagueTeams();
   const roster = getNormalizedRoster();
   const captainWindows = getCaptainWindows();
+  const rosterByOwnerWindow = new Map<
+    string,
+    {
+      1: typeof roster;
+      2: typeof roster;
+      3: typeof roster;
+    }
+  >();
+  for (const team of teams) {
+    rosterByOwnerWindow.set(team.ownerName.toLowerCase(), { 1: [], 2: [], 3: [] });
+  }
+  for (const entry of roster) {
+    const ownerKey = entry.ownerName.toLowerCase();
+    const byWindow = rosterByOwnerWindow.get(ownerKey);
+    if (!byWindow) {
+      continue;
+    }
+    byWindow[entry.windowIndex].push(entry);
+  }
   const uniquePlayers = dedupeByPlayer(roster);
 
   console.info("[match-progression] Building match-wise progression", {
@@ -107,6 +126,12 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
   }
 
   const sortedMatches = [...allMatches].sort((a, b) => a - b);
+  const rosterWindowFallbacks: {
+    matchNumber: number;
+    leagueTeamId: string;
+    activeWindow: 1 | 2 | 3;
+    usedWindow: 1 | 2 | 3;
+  }[] = [];
   const progressionByTeam = new Map<string, TeamMatchProgressPoint[]>();
   const cumulativeByTeam = new Map<string, number>();
   const contributorByTeam = new Map<
@@ -182,11 +207,23 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
 
     for (const team of teams) {
       const activeWindow = resolveWindowIndex(matchNumber);
-      const rawTeamRoster = roster.filter(
-        (entry) =>
-          entry.ownerName.toLowerCase() === team.ownerName.toLowerCase() &&
-          entry.windowIndex === activeWindow,
-      );
+      const ownerKey = team.ownerName.toLowerCase();
+      const byWindow = rosterByOwnerWindow.get(ownerKey) ?? { 1: [], 2: [], 3: [] };
+      const rosterWindowUsed: 1 | 2 | 3 =
+        byWindow[activeWindow].length > 0
+          ? activeWindow
+          : activeWindow === 3 && byWindow[2].length > 0
+            ? 2
+            : 1;
+      if (rosterWindowUsed !== activeWindow) {
+        rosterWindowFallbacks.push({
+          matchNumber,
+          leagueTeamId: team.id,
+          activeWindow,
+          usedWindow: rosterWindowUsed,
+        });
+      }
+      const rawTeamRoster = byWindow[rosterWindowUsed];
       const teamRosterMap = new Map<number, (typeof rawTeamRoster)[number]>();
       for (const player of rawTeamRoster) {
         if (!teamRosterMap.has(player.resolvedPlayerId)) {
@@ -420,6 +457,12 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
       },
     };
   });
+  if (rosterWindowFallbacks.length > 0) {
+    console.info("[match-progression] Roster window fallback applied", {
+      fallbackCount: rosterWindowFallbacks.length,
+      sample: rosterWindowFallbacks.slice(0, 12),
+    });
+  }
 
   const result: MatchProgressionResult = {
     generatedAt: new Date().toISOString(),
