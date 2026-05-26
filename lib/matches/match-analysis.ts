@@ -1,5 +1,6 @@
 import { getCaptainWindows, getLeagueTeams, getNormalizedRoster } from "@/lib/data/seed";
 import { fetchPlayerPopupCards } from "@/lib/ipl/client";
+import { resolveMatchNumberFromName } from "@/lib/matches/match-number";
 import { resolveWindowIndex } from "@/lib/scoring/windows";
 import type {
   MatchAnalysis,
@@ -16,11 +17,6 @@ const CACHE_TTL_MS = 1000 * 60 * 15;
 const globalMatchAnalysisCache = globalThis as typeof globalThis & {
   __matchAnalysisCache?: { generatedAtMs: number; value: MatchAnalysisComputationResult };
 };
-
-function extractMatchNumber(matchName: string): number | null {
-  const match = matchName.match(/match\s+(\d+)/i);
-  return match ? Number(match[1]) : null;
-}
 
 function parseUpcomingEntry(entry: unknown): MatchUpcomingInfo | null {
   if (typeof entry !== "object" || entry === null) {
@@ -47,7 +43,7 @@ function parseUpcomingEntry(entry: unknown): MatchUpcomingInfo | null {
 
   return {
     matchName,
-    matchNumber: extractMatchNumber(matchName),
+    matchNumber: resolveMatchNumberFromName(matchName),
     matchDateIso: rawDate,
     homeTeamShortName,
     awayTeamShortName,
@@ -291,14 +287,19 @@ export async function getMatchAnalysisComputation(
       ? ((payload as { Upcoming?: unknown[] }).Upcoming ?? [])
       : [];
     const pointsByMatch = new Map<number, number>();
+    const unresolvedCompletedMatchNames = new Set<string>();
     const completedMeta: {
       matchNumber: number;
       homeTeamShortName: string | null;
       awayTeamShortName: string | null;
     }[] = [];
     for (const row of completed) {
-      const matchNumber = extractMatchNumber(row.MatchName ?? "");
+      const rawMatchName = row.MatchName ?? "";
+      const matchNumber = resolveMatchNumberFromName(rawMatchName);
       if (matchNumber === null) {
+        if (rawMatchName) {
+          unresolvedCompletedMatchNames.add(rawMatchName);
+        }
         continue;
       }
       pointsByMatch.set(matchNumber, Number(row.GameDaypoints ?? 0));
@@ -324,6 +325,7 @@ export async function getMatchAnalysisComputation(
       pointsByMatch,
       upcoming,
       completedMeta,
+      unresolvedCompletedMatchNames: [...unresolvedCompletedMatchNames],
     };
   });
 
@@ -331,6 +333,7 @@ export async function getMatchAnalysisComputation(
   const completedMatchSet = new Set<number>();
   const upcomingByName = new Map<string, MatchUpcomingInfo>();
   const matchIplTeamsByNumber = new Map<number, Set<string>>();
+  const unresolvedCompletedMatchNames = new Set<string>();
   for (const result of popupResults) {
     playerPointsLookup.set(result.playerId, result.pointsByMatch);
     for (const matchNumber of result.pointsByMatch.keys()) {
@@ -365,6 +368,15 @@ export async function getMatchAnalysisComputation(
       }
       matchIplTeamsByNumber.set(meta.matchNumber, set);
     }
+    for (const unresolvedName of result.unresolvedCompletedMatchNames) {
+      unresolvedCompletedMatchNames.add(unresolvedName);
+    }
+  }
+  if (unresolvedCompletedMatchNames.size > 0) {
+    console.info("[match-analysis] Completed rows with unresolved match names", {
+      unresolvedCount: unresolvedCompletedMatchNames.size,
+      sample: [...unresolvedCompletedMatchNames].slice(0, 10),
+    });
   }
 
   const completedMatches = [...completedMatchSet].sort((a, b) => a - b);

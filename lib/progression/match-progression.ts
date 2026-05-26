@@ -1,5 +1,6 @@
 import { getCaptainWindows, getLeagueTeams, getNormalizedRoster } from "@/lib/data/seed";
 import { fetchPlayerPopupCards } from "@/lib/ipl/client";
+import { resolveMatchNumberFromName } from "@/lib/matches/match-number";
 import { resolveWindowIndex } from "@/lib/scoring/windows";
 import type {
   MatchProgressionResult,
@@ -12,11 +13,6 @@ const CACHE_TTL_MS = 1000 * 60 * 15;
 const globalProgressionCache = globalThis as typeof globalThis & {
   __matchProgressionCache?: { generatedAt: number; value: MatchProgressionResult };
 };
-
-function extractMatchNumber(matchName: string): number | null {
-  const match = matchName.match(/match\s+(\d+)/i);
-  return match ? Number(match[1]) : null;
-}
 
 function dedupeByPlayer(records: { resolvedPlayerId: number; resolvedTeamId: number }[]) {
   const map = new Map<string, { playerId: number; teamId: number }>();
@@ -105,24 +101,43 @@ export async function getMatchProgression(forceRefresh = false): Promise<MatchPr
       : [];
 
     const map = new Map<number, number>();
+    const unresolvedCompletedMatchNames = new Set<string>();
     for (const entry of completed) {
-      const matchNumber = extractMatchNumber(entry.MatchName ?? "");
+      const rawMatchName = entry.MatchName ?? "";
+      const matchNumber = resolveMatchNumberFromName(rawMatchName);
       if (matchNumber === null) {
+        if (rawMatchName) {
+          unresolvedCompletedMatchNames.add(rawMatchName);
+        }
         continue;
       }
       map.set(matchNumber, Number(entry.GameDaypoints ?? 0));
     }
 
-    return { playerId: player.playerId, pointsByMatch: map };
+    return {
+      playerId: player.playerId,
+      pointsByMatch: map,
+      unresolvedCompletedMatchNames: [...unresolvedCompletedMatchNames],
+    };
   });
 
   const pointsLookup = new Map<number, Map<number, number>>();
   const allMatches = new Set<number>();
+  const unresolvedCompletedMatchNames = new Set<string>();
   for (const item of playerMatchMaps) {
     pointsLookup.set(item.playerId, item.pointsByMatch);
     for (const matchNumber of item.pointsByMatch.keys()) {
       allMatches.add(matchNumber);
     }
+    for (const unresolvedName of item.unresolvedCompletedMatchNames) {
+      unresolvedCompletedMatchNames.add(unresolvedName);
+    }
+  }
+  if (unresolvedCompletedMatchNames.size > 0) {
+    console.info("[match-progression] Completed rows with unresolved match names", {
+      unresolvedCount: unresolvedCompletedMatchNames.size,
+      sample: [...unresolvedCompletedMatchNames].slice(0, 10),
+    });
   }
 
   const sortedMatches = [...allMatches].sort((a, b) => a - b);
