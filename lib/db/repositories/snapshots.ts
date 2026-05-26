@@ -85,38 +85,48 @@ export async function persistScoreComputation(result: ScoreComputationResult) {
   }
 
   const rosterRows = [...rosterDedupMap.values()];
-  const captainWindowRows = captainWindows.map((entry) => ({
-    league_team_id: entry.leagueTeamId,
-    window_index: entry.windowIndex,
-    from_match: entry.fromMatch,
-    to_match: entry.toMatch,
-    captain_player_id: entry.captainPlayerId,
-    vice_captain_player_id: entry.viceCaptainPlayerId,
-  }));
+  const captainWindowDedupMap = new Map<
+    string,
+    {
+      league_team_id: string;
+      window_index: number;
+      from_match: number;
+      to_match: number;
+      captain_player_id: number;
+      vice_captain_player_id: number;
+    }
+  >();
+  for (const entry of captainWindows) {
+    const key = `${entry.leagueTeamId}:${entry.windowIndex}`;
+    captainWindowDedupMap.set(key, {
+      league_team_id: entry.leagueTeamId,
+      window_index: entry.windowIndex,
+      from_match: entry.fromMatch,
+      to_match: entry.toMatch,
+      captain_player_id: entry.captainPlayerId,
+      vice_captain_player_id: entry.viceCaptainPlayerId,
+    });
+  }
+  const captainWindowRows = [...captainWindowDedupMap.values()];
 
   const teamIds = leagueTeams.map((team) => team.id);
-  const [deleteRoster, deleteCaptainWindows] = await Promise.all([
-    client
-      .from("league_team_players")
-      .delete()
-      .in("league_team_id", teamIds),
-    client
-      .from("captain_windows")
-      .delete()
-      .in("league_team_id", teamIds),
-  ]);
+  const deleteRoster = await client
+    .from("league_team_players")
+    .delete()
+    .in("league_team_id", teamIds);
 
-  if (deleteRoster.error || deleteCaptainWindows.error) {
+  if (deleteRoster.error) {
     console.error("[snapshot-repo] Failed clearing config rows before sync", {
       rosterDeleteError: deleteRoster.error?.message ?? null,
-      windowsDeleteError: deleteCaptainWindows.error?.message ?? null,
     });
-    throw new Error("Failed to clear existing roster/captain config rows");
+    throw new Error("Failed to clear existing roster rows");
   }
 
   const [rosterWrite, captainWindowsWrite] = await Promise.all([
     client.from("league_team_players").insert(rosterRows),
-    client.from("captain_windows").insert(captainWindowRows),
+    client
+      .from("captain_windows")
+      .upsert(captainWindowRows, { onConflict: "league_team_id,window_index" }),
   ]);
 
   if (rosterWrite.error || captainWindowsWrite.error) {

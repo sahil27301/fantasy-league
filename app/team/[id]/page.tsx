@@ -1,10 +1,10 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
+import { TeamLeadershipBreakdown } from "@/components/team-leadership-breakdown";
 import { getLeagueComputation } from "@/lib/data/score-service";
 import { getCaptainWindows, getNormalizedRoster } from "@/lib/data/seed";
 import { getMatchProgression } from "@/lib/progression/match-progression";
 import { formatPoints } from "@/lib/utils/format";
-import { TeamLeadershipBreakdown } from "@/components/team-leadership-breakdown";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -16,9 +16,13 @@ export default async function TeamPage({
   const { id } = await params;
   const result = await getLeagueComputation(false);
   const progression = await getMatchProgression(false);
-  const team = result.snapshot.standings.find((standing) => standing.leagueTeamId === id);
+  const team = result.snapshot.standings.find(
+    (standing) => standing.leagueTeamId === id,
+  );
   const insight = result.teamInsights.find((item) => item.leagueTeamId === id);
-  const progressionTeam = progression.teams.find((entry) => entry.leagueTeamId === id);
+  const progressionTeam = progression.teams.find(
+    (entry) => entry.leagueTeamId === id,
+  );
 
   if (!team || !insight || !progressionTeam) {
     notFound();
@@ -35,7 +39,10 @@ export default async function TeamPage({
   }
 
   const windowBonusByIndex = new Map(
-    (progressionTeam.windowBonuses ?? []).map((window) => [window.windowIndex, window]),
+    (progressionTeam.windowBonuses ?? []).map((window) => [
+      window.windowIndex,
+      window,
+    ]),
   );
   const leadershipWindows = getCaptainWindows()
     .filter((window) => window.leagueTeamId === id)
@@ -44,11 +51,16 @@ export default async function TeamPage({
       windowIndex: window.windowIndex,
       fromMatch: window.fromMatch,
       toMatch: window.toMatch,
-      captainName: nameByPlayerId.get(window.captainPlayerId) ?? `Player ${window.captainPlayerId}`,
+      captainName:
+        nameByPlayerId.get(window.captainPlayerId) ??
+        `Player ${window.captainPlayerId}`,
       viceCaptainName:
-        nameByPlayerId.get(window.viceCaptainPlayerId) ?? `Player ${window.viceCaptainPlayerId}`,
-      captainBonus: windowBonusByIndex.get(window.windowIndex)?.captainBonus ?? 0,
-      viceCaptainBonus: windowBonusByIndex.get(window.windowIndex)?.viceCaptainBonus ?? 0,
+        nameByPlayerId.get(window.viceCaptainPlayerId) ??
+        `Player ${window.viceCaptainPlayerId}`,
+      captainBonus:
+        windowBonusByIndex.get(window.windowIndex)?.captainBonus ?? 0,
+      viceCaptainBonus:
+        windowBonusByIndex.get(window.windowIndex)?.viceCaptainBonus ?? 0,
     }));
   console.info("[team-page] Leadership windows prepared", {
     leagueTeamId: id,
@@ -60,7 +72,8 @@ export default async function TeamPage({
     .map((window) => ({
       ...window,
       actualCaptainName: window.actualCaptainPlayerId
-        ? (nameByPlayerId.get(window.actualCaptainPlayerId) ?? `Player ${window.actualCaptainPlayerId}`)
+        ? (nameByPlayerId.get(window.actualCaptainPlayerId) ??
+          `Player ${window.actualCaptainPlayerId}`)
         : "N/A",
       actualViceCaptainName: window.actualViceCaptainPlayerId
         ? (nameByPlayerId.get(window.actualViceCaptainPlayerId) ??
@@ -85,7 +98,9 @@ export default async function TeamPage({
         <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
           <div className="metric-tile">
             <p className="text-slate-500">Total</p>
-            <p className="text-lg font-semibold">{formatPoints(team.totalPoints)}</p>
+            <p className="text-lg font-semibold">
+              {formatPoints(team.totalPoints)}
+            </p>
           </div>
           <div className="metric-tile">
             <p className="text-slate-500">Rank</p>
@@ -93,7 +108,9 @@ export default async function TeamPage({
           </div>
           <div className="metric-tile">
             <p className="text-slate-500">Captain ROI</p>
-            <p className="text-lg font-semibold">{formatPoints(insight.statsV1.captainRoi)}</p>
+            <p className="text-lg font-semibold">
+              {formatPoints(insight.statsV1.captainRoi)}
+            </p>
           </div>
           <div className="metric-tile">
             <p className="text-slate-500">Consistency</p>
@@ -112,18 +129,25 @@ export default async function TeamPage({
         <div className="mt-4 grid grid-cols-2 gap-2 text-sm">
           <div className="metric-tile">
             <p className="text-slate-500">Actual Total</p>
-            <p className="text-lg font-semibold">{formatPoints(team.totalPoints)}</p>
+            <p className="text-lg font-semibold">
+              {formatPoints(team.totalPoints)}
+            </p>
           </div>
           <div className="metric-tile">
             <p className="text-slate-500">Theoretical Max</p>
             <p className="text-lg font-semibold">
-              {formatPoints(progressionTeam.theoreticalCaptaincy.totalPotentialPoints)}
+              {formatPoints(
+                progressionTeam.theoreticalCaptaincy.totalPotentialPoints,
+              )}
             </p>
           </div>
           <div className="col-span-2 rounded-2xl bg-indigo-50 p-3 ring-1 ring-indigo-100">
             <p className="text-slate-500">Unrealized Captaincy Points</p>
             <p className="text-lg font-semibold text-indigo-700">
-              +{formatPoints(progressionTeam.theoreticalCaptaincy.unrealizedPoints)}
+              +
+              {formatPoints(
+                progressionTeam.theoreticalCaptaincy.unrealizedPoints,
+              )}
             </p>
           </div>
         </div>
@@ -138,7 +162,8 @@ export default async function TeamPage({
                 Window {window.windowIndex}
               </p>
               <p className="mt-1 text-sm text-slate-600">
-                Actual: C {window.actualCaptainName} / VC {window.actualViceCaptainName}
+                Actual: C {window.actualCaptainName} / VC{" "}
+                {window.actualViceCaptainName}
               </p>
               <p className="text-sm text-slate-600">
                 Optimal: C {window.theoreticalCaptainName} / VC{" "}

@@ -1,11 +1,11 @@
-import Link from "next/link";
-import { getLeagueComputation } from "@/lib/data/score-service";
-import { getCaptainWindows } from "@/lib/data/seed";
-import { fetchLivePlayers } from "@/lib/ipl/client";
 import {
   PlayersDirectory,
   type PlayerDirectoryRow,
 } from "@/components/players-directory";
+import { getLeagueComputation } from "@/lib/data/score-service";
+import { getCaptainWindows } from "@/lib/data/seed";
+import { fetchLivePlayers } from "@/lib/ipl/client";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -17,33 +17,34 @@ export default async function PlayersPage() {
   ]);
   const captainWindows = getCaptainWindows();
 
-  const ownedRows: PlayerDirectoryRow[] = result.snapshot.standings.flatMap((team) =>
-    team.contributors.map((player) => ({
-      fantasyTeamId: team.leagueTeamId,
-      fantasyTeamName: team.displayName,
-      fantasyOwnerName: team.ownerName,
-      playerId: player.playerId,
-      playerName: player.playerName,
-      iplTeamShortName: player.teamShortName,
-      basePoints: player.overallPoints,
-      boostedPoints: player.pointsAfterMultiplier,
-      captainWindows: captainWindows
-        .filter(
-          (window) =>
-            window.leagueTeamId === team.leagueTeamId &&
-            window.captainPlayerId === player.playerId,
-        )
-        .map((window) => window.windowIndex)
-        .sort((a, b) => a - b),
-      viceCaptainWindows: captainWindows
-        .filter(
-          (window) =>
-            window.leagueTeamId === team.leagueTeamId &&
-            window.viceCaptainPlayerId === player.playerId,
-        )
-        .map((window) => window.windowIndex)
-        .sort((a, b) => a - b),
-    })),
+  const ownedRows: PlayerDirectoryRow[] = result.snapshot.standings.flatMap(
+    (team) =>
+      team.contributors.map((player) => ({
+        fantasyTeamId: team.leagueTeamId,
+        fantasyTeamName: team.displayName,
+        fantasyOwnerName: team.ownerName,
+        playerId: player.playerId,
+        playerName: player.playerName,
+        iplTeamShortName: player.teamShortName,
+        basePoints: player.overallPoints,
+        boostedPoints: player.pointsAfterMultiplier,
+        captainWindows: captainWindows
+          .filter(
+            (window) =>
+              window.leagueTeamId === team.leagueTeamId &&
+              window.captainPlayerId === player.playerId,
+          )
+          .map((window) => window.windowIndex)
+          .sort((a, b) => a - b),
+        viceCaptainWindows: captainWindows
+          .filter(
+            (window) =>
+              window.leagueTeamId === team.leagueTeamId &&
+              window.viceCaptainPlayerId === player.playerId,
+          )
+          .map((window) => window.windowIndex)
+          .sort((a, b) => a - b),
+      })),
   );
   const ownedPlayerIds = new Set(ownedRows.map((row) => row.playerId));
   const unownedRows: PlayerDirectoryRow[] = livePlayers
@@ -67,9 +68,9 @@ export default async function PlayersPage() {
     rows: rows.length,
     ownedRows: ownedRows.length,
     unownedRows: unownedRows.length,
-    captainWindowIndexes: [...new Set(captainWindows.map((window) => window.windowIndex))].sort(
-      (a, b) => a - b,
-    ),
+    captainWindowIndexes: [
+      ...new Set(captainWindows.map((window) => window.windowIndex)),
+    ].sort((a, b) => a - b),
   });
 
   return (
