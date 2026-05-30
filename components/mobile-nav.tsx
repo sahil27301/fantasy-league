@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const links = [
   { href: "/", label: "Leaderboard" },
+  { href: "/wrapped", label: "Wrapped" },
   { href: "/stats", label: "Insights" },
   { href: "/progression", label: "Progression" },
   { href: "/matches", label: "Matches" },
@@ -16,6 +17,9 @@ const mobilePrimaryLinks = links.slice(0, 3);
 
 export function DesktopNav() {
   const pathname = usePathname();
+  if (pathname.startsWith("/wrapped")) {
+    return null;
+  }
 
   return (
     <nav className="mb-6 hidden md:block">
@@ -42,10 +46,9 @@ export function DesktopNav() {
 export function MobileNav() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [pathname]);
+  if (pathname.startsWith("/wrapped")) {
+    return null;
+  }
 
   return (
     <>
@@ -68,6 +71,7 @@ export function MobileNav() {
                 <li key={`mobile-menu-${link.href}`}>
                   <Link
                     href={link.href}
+                    onClick={() => setIsMenuOpen(false)}
                     className={`block rounded-xl px-3 py-2.5 text-sm font-semibold transition ${
                       pathname === link.href
                         ? "bg-indigo-600 text-white shadow-sm"
@@ -89,6 +93,7 @@ export function MobileNav() {
             <li key={`mobile-primary-${link.href}`}>
               <Link
                 href={link.href}
+                onClick={() => setIsMenuOpen(false)}
                 className={`inline-flex h-11 w-full items-center justify-center rounded-2xl px-2 text-center transition ${
                   pathname === link.href
                     ? "bg-indigo-600 text-white shadow-sm"

@@ -1,6 +1,6 @@
+import { parse } from "csv-parse/sync";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { parse } from "csv-parse/sync";
 
 const INPUT_PATH = process.argv[2];
 
@@ -11,9 +11,13 @@ if (!INPUT_PATH) {
 
 const root = process.cwd();
 const teamFilePath = path.join(root, "data", "league-teams.json");
-const rosterOutputPath = path.join(root, "data", "normalized_roster.json");
+const rosterOutputPath = path.join(root, "data", "image.png.json");
 const captainOutputPath = path.join(root, "data", "captain_windows.json");
-const unmatchedOutputPath = path.join(root, "data", "unmatched_or_ambiguous.csv");
+const unmatchedOutputPath = path.join(
+  root,
+  "data",
+  "unmatched_or_ambiguous.csv",
+);
 const aliasesPath = path.join(root, "data", "player_aliases.json");
 const confirmationsOutputPath = path.join(
   root,
@@ -105,7 +109,8 @@ function inferWindows(rawName, rawRole) {
 function resolvePlayer(normalizedName, teamShortName, candidates) {
   const normalizedNeedle = normalizeText(normalizedName);
   const teamCandidates = candidates.filter(
-    (candidate) => candidate.TeamShortName.toUpperCase() === teamShortName.toUpperCase(),
+    (candidate) =>
+      candidate.TeamShortName.toUpperCase() === teamShortName.toUpperCase(),
   );
 
   const exact = teamCandidates.find(
@@ -145,7 +150,9 @@ function applyNoTransferPlayoffWindow(entries) {
       continue;
     }
 
-    const window2Entries = ownerEntries.filter((entry) => entry.windowIndex === 2);
+    const window2Entries = ownerEntries.filter(
+      (entry) => entry.windowIndex === 2,
+    );
     if (window2Entries.length === 0) {
       skippedOwners.push(ownerKey);
       continue;
@@ -171,7 +178,9 @@ function applyNoTransferPlayoffWindow(entries) {
 }
 
 async function main() {
-  console.info("[normalize-csv] Starting normalization", { inputPath: INPUT_PATH });
+  console.info("[normalize-csv] Starting normalization", {
+    inputPath: INPUT_PATH,
+  });
   const [csvRaw, teamsRaw, aliasesRaw, playersResponse] = await Promise.all([
     fs.readFile(INPUT_PATH, "utf-8"),
     fs.readFile(teamFilePath, "utf-8"),
@@ -225,7 +234,11 @@ async function main() {
     const cleanedName = cleanPlayerName(playerNameRaw);
     const playerNameNormalized = canonicalPlayerName(cleanedName, aliasMap);
     const inferredRole = inferRole(roleRaw);
-    const resolved = resolvePlayer(playerNameNormalized, iplTeamShortName, livePlayers);
+    const resolved = resolvePlayer(
+      playerNameNormalized,
+      iplTeamShortName,
+      livePlayers,
+    );
 
     windows.forEach((windowIndex) => {
       if (!resolved.player) {
@@ -280,7 +293,10 @@ async function main() {
   for (const entry of normalized) {
     const key = `${entry.ownerName.toLowerCase()}::${entry.resolvedPlayerId}::${entry.windowIndex}`;
     const existing = dedupedMap.get(key);
-    if (!existing || rolePriority(entry.captaincyRole) > rolePriority(existing.captaincyRole)) {
+    if (
+      !existing ||
+      rolePriority(entry.captaincyRole) > rolePriority(existing.captaincyRole)
+    ) {
       dedupedMap.set(key, entry);
     }
   }
@@ -290,7 +306,10 @@ async function main() {
   for (const entry of playoffExpanded.entries) {
     const key = `${entry.ownerName.toLowerCase()}::${entry.resolvedPlayerId}::${entry.windowIndex}`;
     const existing = playoffExpandedDedupedMap.get(key);
-    if (!existing || rolePriority(entry.captaincyRole) > rolePriority(existing.captaincyRole)) {
+    if (
+      !existing ||
+      rolePriority(entry.captaincyRole) > rolePriority(existing.captaincyRole)
+    ) {
       playoffExpandedDedupedMap.set(key, entry);
     }
   }
@@ -318,16 +337,24 @@ async function main() {
 
     [1, 2].forEach((windowIndex) => {
       const windowEntries = finalNormalized.filter(
-        (entry) => entry.ownerName === ownerName && entry.windowIndex === windowIndex,
+        (entry) =>
+          entry.ownerName === ownerName && entry.windowIndex === windowIndex,
       );
-      const captains = windowEntries.filter((entry) => entry.captaincyRole === "captain");
+      const captains = windowEntries.filter(
+        (entry) => entry.captaincyRole === "captain",
+      );
       const viceCaptains = windowEntries.filter(
         (entry) => entry.captaincyRole === "viceCaptain",
       );
       const captain = captains[0];
       const viceCaptain = viceCaptains[0];
 
-      if (!captain || !viceCaptain || captains.length !== 1 || viceCaptains.length !== 1) {
+      if (
+        !captain ||
+        !viceCaptain ||
+        captains.length !== 1 ||
+        viceCaptains.length !== 1
+      ) {
         unresolvedRows.push({
           sourceRow: 0,
           ownerName,
@@ -349,14 +376,21 @@ async function main() {
     });
   });
 
-  await fs.writeFile(rosterOutputPath, JSON.stringify(finalNormalized, null, 2));
-  await fs.writeFile(captainOutputPath, JSON.stringify(captainWindows, null, 2));
+  await fs.writeFile(
+    rosterOutputPath,
+    JSON.stringify(finalNormalized, null, 2),
+  );
+  await fs.writeFile(
+    captainOutputPath,
+    JSON.stringify(captainWindows, null, 2),
+  );
   await fs.writeFile(
     confirmationsOutputPath,
     JSON.stringify([...confirmations.values()], null, 2),
   );
 
-  const unmatchedHeader = "sourceRow,ownerName,playerNameRaw,iplTeamShortName,reason\n";
+  const unmatchedHeader =
+    "sourceRow,ownerName,playerNameRaw,iplTeamShortName,reason\n";
   const unmatchedBody = unresolvedRows
     .map(
       (row) =>
