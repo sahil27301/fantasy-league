@@ -30,6 +30,30 @@ function formatAdjustedPoints({
   return points;
 }
 
+function renderRoleBadge({
+  isCaptain,
+  isViceCaptain,
+}: {
+  isCaptain: boolean;
+  isViceCaptain: boolean;
+}) {
+  if (isCaptain) {
+    return (
+      <span className="inline-flex min-w-[30px] justify-center rounded-full border border-cyan-200/50 bg-cyan-300/20 px-2 py-[2px] text-[10px] font-semibold uppercase tracking-[0.1em] text-cyan-100">
+        C
+      </span>
+    );
+  }
+  if (isViceCaptain) {
+    return (
+      <span className="inline-flex min-w-[30px] justify-center rounded-full border border-indigo-200/45 bg-indigo-300/20 px-2 py-[2px] text-[10px] font-semibold uppercase tracking-[0.06em] text-indigo-100">
+        VC
+      </span>
+    );
+  }
+  return null;
+}
+
 export function WrappedBestMatchBreakdownTable({
   breakdown,
   motion,
@@ -38,7 +62,7 @@ export function WrappedBestMatchBreakdownTable({
 
   return (
     <div
-      className="mt-8 flex max-h-[55svh] max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/20 bg-black/20 opacity-0 backdrop-blur"
+      className="mt-8 flex max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/20 bg-black/20 opacity-0 backdrop-blur"
       style={{
         touchAction: "pan-y",
         animationName: "wrapped-best-match-table-in",
@@ -61,21 +85,20 @@ export function WrappedBestMatchBreakdownTable({
         </p>
       </div>
 
-      <div className="grid grid-cols-[1fr_52px_64px_64px] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/55">
+      <div className="grid grid-cols-[1fr_64px_64px] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/55">
         <span>Player</span>
-        <span className="text-center">Role</span>
         <span className="text-right">Base</span>
         <span className="text-right">Final</span>
       </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-3">
+      <div className="px-2 pb-3">
         <div className="space-y-1">
           {breakdown.players.map((player, index) => {
             const adjusted = formatAdjustedPoints(player);
             return (
               <div
                 key={`${player.playerId}-${player.playerName}`}
-                className="grid grid-cols-[1fr_52px_64px_64px] items-center rounded-lg border border-white/8 bg-white/[0.04] px-2 py-2 text-sm text-white/90 opacity-0"
+                className="grid grid-cols-[1fr_64px_64px] items-center rounded-lg border border-white/8 bg-white/[0.04] px-2 py-2 text-sm text-white/90 opacity-0"
                 style={{
                   animationName: "wrapped-best-match-row-in",
                   animationDuration: `${rowInMs}ms`,
@@ -85,24 +108,15 @@ export function WrappedBestMatchBreakdownTable({
                 }}
               >
                 <div className="min-w-0 pr-2">
-                  <p className="truncate text-sm font-medium">{player.playerName}</p>
+                  <div className="flex items-center gap-1.5">
+                    <p className="min-w-0 truncate text-sm font-medium">
+                      {player.playerName}
+                    </p>
+                    {renderRoleBadge(player)}
+                  </div>
                   <p className="text-[10px] uppercase tracking-[0.12em] text-white/55">
                     {player.iplTeamShortName}
                   </p>
-                </div>
-
-                <div className="flex justify-center">
-                  {player.isCaptain ? (
-                    <span className="inline-flex min-w-[30px] justify-center rounded-full border border-cyan-200/50 bg-cyan-300/20 px-2 py-[2px] text-[10px] font-semibold uppercase tracking-[0.1em] text-cyan-100">
-                      C
-                    </span>
-                  ) : player.isViceCaptain ? (
-                    <span className="inline-flex min-w-[30px] justify-center rounded-full border border-indigo-200/45 bg-indigo-300/20 px-2 py-[2px] text-[10px] font-semibold uppercase tracking-[0.06em] text-indigo-100">
-                      VC
-                    </span>
-                  ) : (
-                    <span className="text-xs text-white/35">-</span>
-                  )}
                 </div>
 
                 <span className="text-right text-sm tabular-nums text-white/75">

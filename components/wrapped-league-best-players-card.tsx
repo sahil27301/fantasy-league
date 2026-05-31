@@ -29,7 +29,7 @@ function renderRoleBadge(role: "captain" | "viceCaptain" | "normal") {
       </span>
     );
   }
-  return <span className="text-xs text-white/35">-</span>;
+  return null;
 }
 
 export function WrappedLeagueBestPlayersCard({
@@ -58,8 +58,7 @@ export function WrappedLeagueBestPlayersCard({
           League Best Players
         </p>
       </div>
-      <div className="grid grid-cols-[46px_1fr_96px_70px] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/55">
-        <span className="text-center">Role</span>
+      <div className="grid grid-cols-[minmax(0,1fr)_80px_64px] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/55">
         <span>Player</span>
         <span>Team</span>
         <span className="text-right">Points</span>
@@ -68,7 +67,7 @@ export function WrappedLeagueBestPlayersCard({
         {breakdown.topPlayers.map((player, index) => (
           <div
             key={`${player.playerId}-${player.fantasyTeamName}`}
-            className={`grid grid-cols-[46px_1fr_96px_70px] items-center rounded-lg border px-2 py-2 text-sm opacity-0 ${
+            className={`grid grid-cols-[minmax(0,1fr)_80px_64px] items-center rounded-lg border px-2 py-2 text-sm opacity-0 ${
               index === 0
                 ? "border-cyan-300/35 bg-cyan-300/10 text-white"
                 : "border-white/8 bg-white/[0.04] text-white/90"
@@ -81,9 +80,11 @@ export function WrappedLeagueBestPlayersCard({
               animationDelay: `${introDelayMs + index * rowStaggerMs}ms`,
             }}
           >
-            <div className="flex justify-center">{renderRoleBadge(player.role)}</div>
             <div className="min-w-0 pr-2">
-              <p className="truncate font-medium">{player.playerName}</p>
+              <div className="flex items-center gap-1.5">
+                <p className="min-w-0 truncate font-medium">{player.playerName}</p>
+                {renderRoleBadge(player.role)}
+              </div>
               <p className="text-[10px] uppercase tracking-[0.12em] text-white/55">
                 {player.iplTeamShortName}
               </p>

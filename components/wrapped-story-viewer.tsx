@@ -1,13 +1,13 @@
 "use client";
 
-import type {
-  TeamWrappedPayload,
-  WrappedGlobalStat,
-} from "@/lib/wrapped/types";
 import { WrappedBestMatchBreakdownTable } from "@/components/wrapped-best-match-breakdown-table";
 import { WrappedCaptaincyBreakdownTable } from "@/components/wrapped-captaincy-breakdown-table";
 import { WrappedLeagueBestPlayersCard } from "@/components/wrapped-league-best-players-card";
 import { WrappedTopPerformersTable } from "@/components/wrapped-top-performers-table";
+import type {
+  TeamWrappedPayload,
+  WrappedGlobalStat,
+} from "@/lib/wrapped/types";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -58,7 +58,9 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
     0,
   );
   const [activeIndex, setActiveIndex] = useState(0);
-  const [tooltipOpenCardId, setTooltipOpenCardId] = useState<string | null>(null);
+  const [tooltipOpenCardId, setTooltipOpenCardId] = useState<string | null>(
+    null,
+  );
   const [firstSlidePhase, setFirstSlidePhase] = useState<"focus" | "expand">(
     "focus",
   );
@@ -69,6 +71,7 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
     tableFullHeight: 420,
     tableScale: 1,
   });
+  const viewerShellRef = useRef<HTMLElement | null>(null);
   const dragStartX = useRef<number | null>(null);
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
@@ -90,17 +93,25 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
       ? globalStatByCardId.get(activeCard.id)
       : undefined;
   const activeVolatilityDetails =
-    activeGlobalStat?.id === "volatility-king" ? activeGlobalStat.volatilityDetails : undefined;
+    activeGlobalStat?.id === "volatility-king"
+      ? activeGlobalStat.volatilityDetails
+      : undefined;
   const activeLeagueBestPlayersBreakdown =
     activeGlobalStat?.id === "overall-best-player"
       ? activeGlobalStat.leagueBestPlayersBreakdown
       : undefined;
   const activeBestMatchBreakdown =
-    activeCard.id === "personal-best-match" ? activeCard.bestMatchBreakdown : undefined;
+    activeCard.id === "personal-best-match"
+      ? activeCard.bestMatchBreakdown
+      : undefined;
   const activeWorstMatchBreakdown =
-    activeCard.id === "personal-worst-match" ? activeCard.worstMatchBreakdown : undefined;
+    activeCard.id === "personal-worst-match"
+      ? activeCard.worstMatchBreakdown
+      : undefined;
   const activeCaptaincyBreakdown =
-    activeCard.id === "personal-captaincy" ? activeCard.captaincyBreakdown : undefined;
+    activeCard.id === "personal-captaincy"
+      ? activeCard.captaincyBreakdown
+      : undefined;
   const activeTopPerformersBreakdown =
     activeCard.id === "personal-top-performers"
       ? activeCard.topPerformersBreakdown
@@ -178,12 +189,7 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
       hasBreakdown: Boolean(activeBestMatchBreakdown),
       playerCount: activeBestMatchBreakdown?.players.length ?? 0,
     });
-  }, [
-    activeIndex,
-    activeCard.id,
-    activeBestMatchBreakdown,
-    detailTableMotion,
-  ]);
+  }, [activeIndex, activeCard.id, activeBestMatchBreakdown, detailTableMotion]);
 
   useEffect(() => {
     if (activeCard.id !== "personal-worst-match") {
@@ -215,12 +221,7 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
       playersCount: activeCaptaincyBreakdown?.players.length ?? 0,
       totalBonus: activeCaptaincyBreakdown?.totalBonus ?? null,
     });
-  }, [
-    activeCard.id,
-    activeIndex,
-    activeCaptaincyBreakdown,
-    detailTableMotion,
-  ]);
+  }, [activeCard.id, activeIndex, activeCaptaincyBreakdown, detailTableMotion]);
 
   useEffect(() => {
     if (activeCard.id !== "personal-top-performers") {
@@ -231,7 +232,8 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
       detailTableMotion,
       hasBreakdown: Boolean(activeTopPerformersBreakdown),
       topFiveCount: activeTopPerformersBreakdown?.topFive.length ?? 0,
-      bestPerformer: activeTopPerformersBreakdown?.bestPerformer.playerName ?? null,
+      bestPerformer:
+        activeTopPerformersBreakdown?.bestPerformer.playerName ?? null,
     });
   }, [
     activeCard.id,
@@ -239,6 +241,27 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
     activeTopPerformersBreakdown,
     detailTableMotion,
   ]);
+
+  useEffect(() => {
+    const isInlineRoleChipTable =
+      activeCard.id === "personal-best-match" ||
+      activeCard.id === "personal-worst-match" ||
+      activeCard.id === "personal-captaincy" ||
+      activeCard.id === "personal-top-performers" ||
+      activeGlobalStat?.id === "overall-best-player";
+
+    if (!isInlineRoleChipTable) {
+      return;
+    }
+
+    console.info("[wrapped-viewer] Inline role-chip table layout active", {
+      activeIndex,
+      cardId: activeCard.id,
+      globalStatId: activeGlobalStat?.id ?? null,
+      roleChipLayout: "inline-name",
+      dedicatedRoleColumn: false,
+    });
+  }, [activeCard.id, activeGlobalStat?.id, activeIndex]);
 
   useEffect(() => {
     if (!isGlobalCard) {
@@ -274,7 +297,12 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
       yourMatchNumber: activeVolatilityDetails?.you.matchNumber ?? null,
       yourSwing: activeVolatilityDetails?.you.rankSwing ?? null,
     });
-  }, [activeCard.id, activeGlobalStat?.id, activeIndex, activeVolatilityDetails]);
+  }, [
+    activeCard.id,
+    activeGlobalStat?.id,
+    activeIndex,
+    activeVolatilityDetails,
+  ]);
 
   useEffect(() => {
     if (activeGlobalStat?.id !== "overall-best-player") {
@@ -284,10 +312,16 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
       activeIndex,
       cardId: activeCard.id,
       hasBreakdown: Boolean(activeLeagueBestPlayersBreakdown),
-      bestPlayerId: activeLeagueBestPlayersBreakdown?.bestPlayer.playerId ?? null,
+      bestPlayerId:
+        activeLeagueBestPlayersBreakdown?.bestPlayer.playerId ?? null,
       topPlayersCount: activeLeagueBestPlayersBreakdown?.topPlayers.length ?? 0,
     });
-  }, [activeCard.id, activeGlobalStat?.id, activeIndex, activeLeagueBestPlayersBreakdown]);
+  }, [
+    activeCard.id,
+    activeGlobalStat?.id,
+    activeIndex,
+    activeLeagueBestPlayersBreakdown,
+  ]);
 
   useEffect(() => {
     const previousBodyOverflow = document.body.style.overflow;
@@ -310,6 +344,44 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
   }, []);
 
   useEffect(() => {
+    const shell = viewerShellRef.current;
+    if (!shell) {
+      return;
+    }
+
+    const previousScrollTop = shell.scrollTop;
+    if (previousScrollTop !== 0) {
+      shell.scrollTo({ top: 0, behavior: "auto" });
+    }
+
+    const logLayoutMetrics = () => {
+      console.info("[wrapped-viewer] Slide viewport metrics", {
+        activeIndex,
+        cardId: activeCard.id,
+        previousScrollTop: Number(previousScrollTop.toFixed(2)),
+        viewportHeight: Number(shell.clientHeight.toFixed(2)),
+        contentHeight: Number(shell.scrollHeight.toFixed(2)),
+        canScrollVertically: shell.scrollHeight > shell.clientHeight + 1,
+        backgroundLayerMode: "fixed-viewport",
+      });
+    };
+
+    let secondFrame = 0;
+    const firstFrame = window.requestAnimationFrame(() => {
+      secondFrame = window.requestAnimationFrame(() => {
+        logLayoutMetrics();
+      });
+    });
+
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      if (secondFrame !== 0) {
+        window.cancelAnimationFrame(secondFrame);
+      }
+    };
+  }, [activeIndex, activeCard.id]);
+
+  useEffect(() => {
     if (activeIndex !== 0) {
       return;
     }
@@ -324,7 +396,6 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
     }
 
     const applyMeasuredLayout = () => {
-      const viewportRect = viewportEl.getBoundingClientRect();
       const tableRect = tableEl.getBoundingClientRect();
       const headerRect = headerEl.getBoundingClientRect();
       const highlightedRowRect = highlightedRowEl.getBoundingClientRect();
@@ -356,12 +427,10 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
         maxOffset = Math.max(tableRect.height - focusHeight, 0);
         focusOffset = clamp(desiredOffset, 0, maxOffset);
       }
-      const viewportHeight =
-        window.visualViewport?.height ?? window.innerHeight;
-      const safeBottomBuffer = 12;
-      const availableHeight =
-        viewportHeight - viewportRect.top - safeBottomBuffer;
-      const tableScale = Math.min(1, availableHeight / tableRect.height);
+      // Keep the first slide table at full visual size.
+      // Now that the viewer shell can scroll vertically, we no longer need
+      // to shrink the table to force everything into one viewport.
+      const tableScale = 1;
 
       setFirstSlideMetrics({
         focusOffset: Number(focusOffset.toFixed(2)),
@@ -378,7 +447,6 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
         headerHeight: Number(headerRect.height.toFixed(2)),
         fullHeight: Number(tableRect.height.toFixed(2)),
         tableScale: Number(tableScale.toFixed(4)),
-        availableHeight: Number(availableHeight.toFixed(2)),
       });
     };
 
@@ -458,10 +526,13 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
     }
     const now = Date.now();
     if (now - lastTouchInteractionAtMs.current < 700) {
-      console.info("[wrapped-viewer] Ignoring pointer down near touch interaction", {
-        pointerType: event.pointerType,
-        elapsedSinceTouchMs: now - lastTouchInteractionAtMs.current,
-      });
+      console.info(
+        "[wrapped-viewer] Ignoring pointer down near touch interaction",
+        {
+          pointerType: event.pointerType,
+          elapsedSinceTouchMs: now - lastTouchInteractionAtMs.current,
+        },
+      );
       return;
     }
     dragStartX.current = event.clientX;
@@ -473,10 +544,13 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
     }
     const now = Date.now();
     if (now - lastTouchInteractionAtMs.current < 700) {
-      console.info("[wrapped-viewer] Ignoring pointer up near touch interaction", {
-        pointerType: event.pointerType,
-        elapsedSinceTouchMs: now - lastTouchInteractionAtMs.current,
-      });
+      console.info(
+        "[wrapped-viewer] Ignoring pointer up near touch interaction",
+        {
+          pointerType: event.pointerType,
+          elapsedSinceTouchMs: now - lastTouchInteractionAtMs.current,
+        },
+      );
       return;
     }
     const startX = dragStartX.current;
@@ -563,7 +637,8 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
 
   return (
     <section
-      className="relative isolate min-h-[100svh] overflow-hidden bg-[#050a1a] text-white"
+      ref={viewerShellRef}
+      className="relative isolate h-[100dvh] min-h-[100svh] overflow-x-hidden overflow-y-auto bg-[#050a1a] text-white"
       style={{ touchAction: "pan-y" }}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
@@ -579,7 +654,7 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
       }}
       tabIndex={0}
     >
-      <div className="pointer-events-none absolute inset-0">
+      <div className="pointer-events-none fixed inset-0">
         <div
           className={`absolute inset-0 bg-gradient-to-br ${cardGradient(activeCard.kind)}`}
           style={{
@@ -601,7 +676,7 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.18),transparent_42%),radial-gradient(circle_at_78%_72%,rgba(56,189,248,0.24),transparent_36%)] opacity-75" />
       </div>
 
-      <div className="relative flex min-h-[100svh] flex-col px-4 pb-8 pt-8 sm:px-6 sm:pt-10">
+      <div className="relative flex min-h-full flex-col px-4 pb-8 pt-8 sm:px-6 sm:pt-10">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-indigo-100/80">
@@ -801,7 +876,7 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
               {isGlobalCard ? (
                 <>
                   <div
-                    className="wrapped-global-lower-section mt-6 max-h-[56svh] max-w-2xl overflow-y-auto overscroll-contain rounded-2xl border border-white/20 bg-black/18 px-4 py-4 backdrop-blur sm:max-h-[62svh] sm:px-5 sm:py-5"
+                    className="wrapped-global-lower-section mt-6 max-w-2xl rounded-2xl border border-white/20 bg-black/18 px-4 py-4 backdrop-blur sm:px-5 sm:py-5"
                     style={{
                       animationName: "wrapped-global-lower-in",
                       animationDuration: `${globalLowerSectionInMs}ms`,
@@ -874,7 +949,10 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
                       <WrappedLeagueBestPlayersCard
                         breakdown={activeLeagueBestPlayersBreakdown}
                         motion={{
-                          introDelayMs: Math.max(Math.round(detailTableMotion.introDelayMs * 0.25), 120),
+                          introDelayMs: Math.max(
+                            Math.round(detailTableMotion.introDelayMs * 0.25),
+                            120,
+                          ),
                           tableInMs: detailTableMotion.tableInMs,
                           rowInMs: detailTableMotion.rowInMs,
                           rowStaggerMs: detailTableMotion.rowStaggerMs,
@@ -884,10 +962,12 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
                     {activeVolatilityDetails ? (
                       <div className="mt-4 grid max-w-2xl grid-cols-1 gap-2 text-[11px] text-white/88 sm:grid-cols-2">
                         <div className="rounded-xl border border-white/15 bg-white/[0.04] px-3 py-2.5">
-                          <p className="uppercase tracking-[0.12em] text-white/55">Winner swing</p>
+                          <p className="uppercase tracking-[0.12em] text-white/55">
+                            Winner swing
+                          </p>
                           <p className="mt-1 text-sm font-semibold text-white">
-                            Match #{activeVolatilityDetails.winner.matchNumber} ·{" "}
-                            {activeVolatilityDetails.winner.matchupLabel}
+                            Match #{activeVolatilityDetails.winner.matchNumber}{" "}
+                            · {activeVolatilityDetails.winner.matchupLabel}
                           </p>
                           <p className="mt-1 text-white/75">
                             Points:{" "}
@@ -905,7 +985,9 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
                           </p>
                         </div>
                         <div className="rounded-xl border border-white/15 bg-white/[0.04] px-3 py-2.5">
-                          <p className="uppercase tracking-[0.12em] text-white/55">Your swing</p>
+                          <p className="uppercase tracking-[0.12em] text-white/55">
+                            Your swing
+                          </p>
                           <p className="mt-1 text-sm font-semibold text-white">
                             Match #{activeVolatilityDetails.you.matchNumber} ·{" "}
                             {activeVolatilityDetails.you.matchupLabel}
@@ -934,7 +1016,8 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
                       style={{
                         animationName: "wrapped-global-lower-in",
                         animationDuration: `${globalLowerSectionInMs}ms`,
-                        animationTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+                        animationTimingFunction:
+                          "cubic-bezier(0.22, 1, 0.36, 1)",
                         animationFillMode: "forwards",
                         animationDelay: `${globalLowerSectionDelayMs}ms`,
                       }}
@@ -950,11 +1033,14 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
                           event.stopPropagation();
                           const nextOpen = !isMetricTooltipOpen;
                           setTooltipOpenCardId(nextOpen ? activeCard.id : null);
-                          console.info("[wrapped-viewer] Toggled metric tooltip", {
-                            activeIndex,
-                            metricId: activeGlobalStat?.id ?? null,
-                            nextOpen,
-                          });
+                          console.info(
+                            "[wrapped-viewer] Toggled metric tooltip",
+                            {
+                              activeIndex,
+                              metricId: activeGlobalStat?.id ?? null,
+                              nextOpen,
+                            },
+                          );
                         }}
                       >
                         How is this calculated?
@@ -972,7 +1058,11 @@ export function WrappedStoryViewer({ payload }: WrappedStoryViewerProps) {
                           </p>
                           <div className="mt-2 space-y-1">
                             {activeMetricTooltip.lines.map((line, index) => (
-                              <p key={`${activeGlobalStat?.id ?? "metric"}-${index}`}>{line}</p>
+                              <p
+                                key={`${activeGlobalStat?.id ?? "metric"}-${index}`}
+                              >
+                                {line}
+                              </p>
                             ))}
                           </div>
                         </div>
